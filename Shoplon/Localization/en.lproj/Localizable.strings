@@ -1,0 +1,19 @@
+/* 
+  Localizable.strings
+  Shoplon
+
+  Created by Telman Yusifov on 22.05.25.
+  
+*/
+
+"skip" = "Skip";
+"onboarding1title" = "Find the item you’ve been looking for";
+"onboarding1subtitle" = "Here you’ll see rich varieties of goods, carefully classified for seamless browsing experience.";
+"onboarding2title" = "Get those shopping bags filled";
+"onboarding2subtitle" = "Add any item you want to your cart, or save it on your wishlist, so you don’t miss it in your future purchases.";
+"onboarding3title" = "Fast & secure payment";
+"onboarding3subtitle" = "There are many payment options available for your ease.";
+"onboarding4title" = "Package tracking";
+"onboarding4subtitle" = "In particular, Shoplon can pack your orders, and help you seamlessly manage your shipments.";
+"onboarding5title" = "Nearby stores";
+"onboarding5subtitle" = "Easily track nearby shops, browse through their items and get information about their prodcuts.";

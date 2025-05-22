@@ -1,0 +1,19 @@
+/* 
+  Localizable.strings
+  Shoplon
+
+  Created by Telman Yusifov on 22.05.25.
+  
+*/
+
+"skip" = "Keç";
+"onboarding1title" = "Axtardığınız məhsulu tapın";
+"onboarding1subtitle" = "Burada siz problemsiz baxış təcrübəsi üçün diqqətlə təsnif edilmiş zəngin məhsul çeşidlərini görəcəksiniz.";
+"onboarding2title" = "Alış-veriş çantalarınızı doldurun";
+"onboarding2subtitle" = "İstədiyiniz məhsulu səbətinizə əlavə edin və ya arzu siyahınıza qeyd edin ki, gələcək alışlarınızda itirməyəsiniz.";
+"onboarding3title" = "Sürətli və təhlükəsiz ödəniş";
+"onboarding3subtitle" = "Rahatlığınız üçün bir çox ödəniş seçimi mövcuddur.";
+"onboarding4title" = "Bağlamanın izlənməsi";
+"onboarding4subtitle" = "Xüsusilə Shoplon sifarişlərinizi qablaşdırıb, göndərişlərinizi rahatlıqla idarə etməyə kömək edə bilər.";
+"onboarding5title" = "Yaxınlıqdakı mağazalar";
+"onboarding5subtitle" = "Yaxınlıqdakı mağazaları asanlıqla izləyin, məhsullarına baxın və onlar haqqında məlumat əldə edin.";

@@ -8,7 +8,7 @@
 import UIKit
 
 enum OnboardingRoute {
-    case welcome
+    case notificationPermission
 }
 
 final class OnboardingRouter {
@@ -16,9 +16,9 @@ final class OnboardingRouter {
     
     func navigate(to route: OnboardingRoute) {
         switch route {
-        case .welcome:
-            let vc = SelectLanguageViewController()
-            view?.navigationController?.pushViewController(vc, animated: true)
+        case .notificationPermission:
+            let vc = NotificationPermissionBuilder().build()
+            view?.navigationController?.setViewControllers([vc], animated: true)
         }
     }
 }

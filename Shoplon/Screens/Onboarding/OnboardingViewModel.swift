@@ -14,7 +14,7 @@ final class OnboardingViewModel {
         self.router = router
     }
     
-    func navigateToWelcome() {
-        router.navigate(to: .welcome)
+    func navigateToNotificationPermission() {
+        router.navigate(to: .notificationPermission)
     }
 }
