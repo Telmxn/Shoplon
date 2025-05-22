@@ -6,7 +6,9 @@
   
 */
 
+"next" = "Next";
 "skip" = "Skip";
+"notifications" = "Notifications";
 "onboarding1title" = "Find the item you’ve been looking for";
 "onboarding1subtitle" = "Here you’ll see rich varieties of goods, carefully classified for seamless browsing experience.";
 "onboarding2title" = "Get those shopping bags filled";
@@ -17,3 +19,5 @@
 "onboarding4subtitle" = "In particular, Shoplon can pack your orders, and help you seamlessly manage your shipments.";
 "onboarding5title" = "Nearby stores";
 "onboarding5subtitle" = "Easily track nearby shops, browse through their items and get information about their prodcuts.";
+"notificationpermissiontitle" = "Notify latest offers & product availability";
+"notificationpermissionsubtitle" = "ba faal kardane notificatione shoplon, zoodtar az hame az akhbare ma bakhabar shavid.";

@@ -35,11 +35,9 @@ final class OnboardingViewController: BaseViewController {
         return pageController
     }()
     
-    
-    
     private lazy var skipButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Skip", for: .normal)
+        button.setTitle("skip".localized(), for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.customFont(weight: .medium, size: 14)
         button.addTarget(self, action: #selector(didTapSkipButton), for: .touchUpInside)

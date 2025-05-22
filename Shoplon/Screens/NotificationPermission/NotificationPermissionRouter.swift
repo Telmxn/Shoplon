@@ -17,8 +17,8 @@ final class NotificationPermissionRouter {
     func navigate(to route: NotificationPermissionRoute) {
         switch route {
         case .selectLanguage:
-            let vc = SelectLanguageViewController()
-            view?.navigationController?.pushViewController(vc, animated: true)
+            let vc = SelectLanguageBuilder().build()
+            view?.navigationController?.setViewControllers([vc], animated: true)
         }
     }
 }

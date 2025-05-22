@@ -57,7 +57,6 @@ class ChooseItemViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(DependencyContainer.shared.languageManager.get())
         setupUI()
     }
     

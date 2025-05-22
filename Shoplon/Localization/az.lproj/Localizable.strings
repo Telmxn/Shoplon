@@ -6,7 +6,9 @@
   
 */
 
+"next" = "İrəli";
 "skip" = "Keç";
+"notifications" = "Bildirişlər";
 "onboarding1title" = "Axtardığınız məhsulu tapın";
 "onboarding1subtitle" = "Burada siz problemsiz baxış təcrübəsi üçün diqqətlə təsnif edilmiş zəngin məhsul çeşidlərini görəcəksiniz.";
 "onboarding2title" = "Alış-veriş çantalarınızı doldurun";
@@ -17,3 +19,5 @@
 "onboarding4subtitle" = "Xüsusilə Shoplon sifarişlərinizi qablaşdırıb, göndərişlərinizi rahatlıqla idarə etməyə kömək edə bilər.";
 "onboarding5title" = "Yaxınlıqdakı mağazalar";
 "onboarding5subtitle" = "Yaxınlıqdakı mağazaları asanlıqla izləyin, məhsullarına baxın və onlar haqqında məlumat əldə edin.";
+"notificationpermissiontitle" = "Ən son təkliflər və məhsul mövcudluğu barədə bildiriş alın";
+"notificationpermissionsubtitle" = "Shoplon bildirişlərini aktiv etməklə xəbərlərimizdən hamıdan əvvəl xəbərdar olun.";
