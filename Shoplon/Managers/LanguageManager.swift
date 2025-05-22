@@ -5,9 +5,9 @@
 //  Created by Telman Yusifov on 22.05.25.
 //
 
-import Foundation
+import UIKit
 
-enum Language: String {
+enum Language: String, CaseIterable {
     case az = "az"
     case en = "en"
     case tr = "tr"
@@ -23,6 +23,19 @@ enum Language: String {
             return "Türkçe"
         case .ru:
             return "Русский"
+        }
+    }
+    
+    var flag: UIImage {
+        switch self {
+        case .az:
+            return .az
+        case .en:
+            return .en
+        case .tr:
+            return .tr
+        case .ru:
+            return .ru
         }
     }
 }

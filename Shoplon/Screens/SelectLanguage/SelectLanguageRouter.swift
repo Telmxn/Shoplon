@@ -17,7 +17,7 @@ final class SelectLanguageRouter {
     func navigate(to route: SelectLanguageRoute) {
         switch route {
         case .login:
-            let vc = LoginViewController()
+            let vc = LoginBuilder().build()
             view?.navigationController?.setViewControllers([vc], animated: true)
         }
     }

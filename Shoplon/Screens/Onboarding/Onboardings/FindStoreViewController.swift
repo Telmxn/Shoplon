@@ -34,7 +34,7 @@ class FindStoreViewController: BaseViewController {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Nearby stores"
+        label.text = "onboarding5title".localized()
         label.font = UIFont.customFont(weight: .medium, size: 32)
         label.textColor = .black
         label.numberOfLines = 0
@@ -44,7 +44,7 @@ class FindStoreViewController: BaseViewController {
     
     private let subtitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Easily track nearby shops, browse through their items and get information about their prodcuts."
+        label.text = "onboarding5subtitle".localized()
         label.font = UIFont.customFont(weight: .regular, size: 14)
         label.textColor = .black40
         label.numberOfLines = 0

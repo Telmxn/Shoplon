@@ -21,3 +21,6 @@
 "onboarding5subtitle" = "Yakındaki mağazaları kolayca takip edin, ürünlerine göz atın ve onlar hakkında bilgi alın.";
 "notificationpermissiontitle" = "En yeni teklifleri ve ürün stok durumunu bildirin";
 "notificationpermissionsubtitle" = "Shoplon bildirimlerini etkinleştirerek en son haberlerden herkesten önce haberdar olun.";
+"selectlanguagetitle" = "Tercih ettiğiniz dili seçin";
+"selectlanguagesubtitle" = "Uygulama boyunca aynı dili kullanacaksınız.";
+
