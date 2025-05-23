@@ -27,12 +27,12 @@ extension Keyboardable where Self: UIViewController {
     func startKeyboardObserve() {
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil) { [weak self] notification in
             let height = self?.getHeight(userInfo: notification.userInfo) ?? 0
-            self?.targetConstraint?.update(offset: -height)
+            self?.targetConstraint?.update(offset: -height + 16)
             self?.view.layoutIfNeeded()
         }
         
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: nil) { [weak self] notification in
-            self?.targetConstraint?.update(offset: -16)
+            self?.targetConstraint?.update(offset: -24)
             self?.view.layoutIfNeeded()
         }
     }

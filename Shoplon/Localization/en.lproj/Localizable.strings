@@ -23,3 +23,8 @@
 "notificationpermissionsubtitle" = "ba faal kardane notificatione shoplon, zoodtar az hame az akhbare ma bakhabar shavid.";
 "selectlanguagetitle" = "Select your preferred lanaguage";
 "selectlanguagesubtitle" = "You will use the same language throughout the app.";
+"welcomeback" = "Welcome back!";
+"logintext" = "Log in with your data that you intered during your registration.";
+"forgotpassword" = "Forgot password";
+"dontHaveAnAccount" = "Don’t have an account?";
+"signUp" = "Sign up";

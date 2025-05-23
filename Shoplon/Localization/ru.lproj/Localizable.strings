@@ -23,3 +23,8 @@
 "notificationpermissionsubtitle" = "Включив уведомления от Shoplon, вы первыми узнаете о наших новостях.";
 "selectlanguagetitle" = "Выберите предпочитаемый язык";
 "selectlanguagesubtitle" = "Вы будете использовать этот язык во всём приложении.";
+"welcomeback" = "С возвращением!";
+"logintext" = "Войдите, используя данные, указанные при регистрации.";
+"forgotpassword" = "Забыли пароль";
+"dontHaveAnAccount" = "Нет аккаунта?";
+"signUp" = "Зарегистрироваться";

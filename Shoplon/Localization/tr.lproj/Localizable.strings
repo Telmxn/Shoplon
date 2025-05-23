@@ -23,4 +23,9 @@
 "notificationpermissionsubtitle" = "Shoplon bildirimlerini etkinleştirerek en son haberlerden herkesten önce haberdar olun.";
 "selectlanguagetitle" = "Tercih ettiğiniz dili seçin";
 "selectlanguagesubtitle" = "Uygulama boyunca aynı dili kullanacaksınız.";
+"welcomeback" = "Tekrar hoş geldiniz!";
+"logintext" = "Kayıt sırasında girdiğiniz bilgilerle giriş yapın.";
+"forgotpassword" = "Şifremi unuttum";
+"dontHaveAnAccount" = "Hesabınız yok mu?";
+"signUp" = "Kayıt ol";
 

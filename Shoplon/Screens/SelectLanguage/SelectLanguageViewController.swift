@@ -108,7 +108,6 @@ class SelectLanguageViewController: BaseViewController {
     
     @objc
     private func didTapNextButton() {
-        DependencyContainer.shared.languageManager.change(language: selectedLanguage ?? Language.en.rawValue)
         viewModel.navigateToLogin()
     }
     
@@ -119,6 +118,14 @@ class SelectLanguageViewController: BaseViewController {
         }
         guard let tappedView = sender.view as? LanguageView else { return }
         selectedLanguage = tappedView.language
+        DependencyContainer.shared.languageManager.change(language: selectedLanguage ?? Language.en.rawValue)
         tappedView.setSelected()
+        localizeAllTexts()
+    }
+    
+    private func localizeAllTexts() {
+        titleLabel.text = "selectlanguagetitle".localized()
+        subtitleLabel.text = "selectlanguagesubtitle".localized()
+        nextButton.setTitle("next".localized(), for: .normal)
     }
 }
