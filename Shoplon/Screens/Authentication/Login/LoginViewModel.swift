@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class LoginViewModel {
+final class LoginViewModel: BaseViewModel {
     private let router: LoginRouter
     
     init(router: LoginRouter) {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class SelectLanguageViewModel {
+final class SelectLanguageViewModel: BaseViewModel {
     private let router: SelectLanguageRouter
     
     init(router: SelectLanguageRouter) {

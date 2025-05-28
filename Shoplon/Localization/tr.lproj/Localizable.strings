@@ -28,4 +28,7 @@
 "forgotpassword" = "Şifremi unuttum";
 "dontHaveAnAccount" = "Hesabınız yok mu?";
 "signUp" = "Kayıt ol";
+"passwordRecovery" = "Şifre kurtarma";
+"passwordRecoveryText" = "Şifrenizi kurtarmak için e-posta adresinizi girin";
+"login" = "Giriş yap";
 

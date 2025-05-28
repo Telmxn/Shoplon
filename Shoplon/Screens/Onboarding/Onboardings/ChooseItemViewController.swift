@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ChooseItemViewController: BaseViewController {
+class ChooseItemViewController: UIViewController {
     
     private let mainStackView: UIStackView = {
         let view = UIStackView()
@@ -56,7 +56,7 @@ class ChooseItemViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.backgroundColor = .white
         setupUI()
     }
     

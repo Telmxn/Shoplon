@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AddToCardViewController: BaseViewController {
+class AddToCardViewController: UIViewController {
     private let mainStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
@@ -54,6 +54,7 @@ class AddToCardViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         setupUI()
     }
     

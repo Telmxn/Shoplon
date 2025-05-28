@@ -28,3 +28,6 @@
 "forgotpassword" = "Забыли пароль";
 "dontHaveAnAccount" = "Нет аккаунта?";
 "signUp" = "Зарегистрироваться";
+"passwordRecovery" = "Восстановление пароля";
+"passwordRecoveryText" = "Введите свою электронную почту для восстановления пароля";
+"login" = "Войти";

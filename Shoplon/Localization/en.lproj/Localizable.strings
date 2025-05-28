@@ -28,3 +28,6 @@
 "forgotpassword" = "Forgot password";
 "dontHaveAnAccount" = "Don’t have an account?";
 "signUp" = "Sign up";
+"passwordRecovery" = "Password recovery";
+"passwordRecoveryText" = "Enter your E-mail address to recover your password";
+"login" = "Log in";

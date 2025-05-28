@@ -28,3 +28,6 @@
 "forgotpassword" = "Şifrəni unutmusunuz";
 "dontHaveAnAccount" = "Hesabınız yoxdur?";
 "signUp" = "Qeydiyyatdan keç";
+"passwordRecovery" = "Şifrəni bərpa et";
+"passwordRecoveryText" = "Şifrənizi bərpa etmək üçün e-poçt ünvanınızı daxil edin";
+"login" = "Daxil ol";

@@ -18,10 +18,10 @@ final class LoginRouter {
     func navigate(to route: LoginRoute) {
         switch route {
         case .forgotPassword:
-            let vc = PasswordRecoveryViewController()
+            let vc = PasswordRecoveryBuilder().build()
             view?.navigationController?.pushViewController(vc, animated: true)
         case .signUp:
-            let vc = PasswordRecoveryViewController()
+            let vc = PasswordRecoveryBuilder().build()
             view?.navigationController?.pushViewController(vc, animated: true)
         }
     }

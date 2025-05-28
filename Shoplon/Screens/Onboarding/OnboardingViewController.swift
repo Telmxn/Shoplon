@@ -7,9 +7,7 @@
 
 import UIKit
 
-final class OnboardingViewController: BaseViewController {
-    
-    private var viewModel: OnboardingViewModel
+final class OnboardingViewController: BaseViewController<OnboardingViewModel> {
     
     private var currentViewControllerIndex = 0
     
@@ -70,15 +68,6 @@ final class OnboardingViewController: BaseViewController {
         view.distribution = .fillProportionally
         return view
     }()
-    
-    init(viewModel: OnboardingViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    @MainActor required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

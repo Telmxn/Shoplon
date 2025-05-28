@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class OnboardingViewModel {
+final class OnboardingViewModel: BaseViewModel {
     private let router: OnboardingRouter
     
     init(router: OnboardingRouter) {

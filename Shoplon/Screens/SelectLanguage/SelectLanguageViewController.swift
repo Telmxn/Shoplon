@@ -7,9 +7,7 @@
 
 import UIKit
 
-class SelectLanguageViewController: BaseViewController {
-    
-    private let viewModel: SelectLanguageViewModel
+class SelectLanguageViewController: BaseViewController<SelectLanguageViewModel> {
     
     private var selectedLanguage: String?
     
@@ -52,15 +50,6 @@ class SelectLanguageViewController: BaseViewController {
         view.distribution = .fillEqually
         return view
     }()
-    
-    init(viewModel: SelectLanguageViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    @MainActor required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -8,11 +8,9 @@
 import UIKit
 import SnapKit
 
-class LoginViewController: BaseViewController, Keyboardable {
+class LoginViewController: BaseViewController<LoginViewModel>, Keyboardable {
     
     var targetConstraint: Constraint?
-    
-    private let viewModel: LoginViewModel
     
     private let imageView: UIImageView = {
         let view = UIImageView()
@@ -81,17 +79,20 @@ class LoginViewController: BaseViewController, Keyboardable {
         return textField
     }()
     
-    private let forgotPasswordLabel: UILabel = {
+    private lazy var forgotPasswordLabel: UILabel = {
         let label = UILabel()
         label.textColor = .purple100
         label.text = "forgotpassword".localized()
         label.font = UIFont.customFont(weight: .medium, size: 14)
         label.textAlignment = .center
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapForPassword))
+        label.addGestureRecognizer(tapGesture)
+        label.isUserInteractionEnabled = true
         return label
     }()
     
     private lazy var loginButton: BaseButton = {
-        let button = BaseButton(text: "Log in")
+        let button = BaseButton(text: "login".localized())
         return button
     }()
     
@@ -99,20 +100,11 @@ class LoginViewController: BaseViewController, Keyboardable {
         let label = UILabel()
         label.font = UIFont.customFont(weight: .regular, size: 14)
         label.textColor = .black40
-        label.text = "\("dontHaveAnAccount".localized())\("signUp".localized())"
+        label.text = "\("dontHaveAnAccount".localized()) \("signUp".localized())"
         label.textAlignment = .center
         label.halfTextColorChange(fullText: "\("dontHaveAnAccount".localized())\("signUp".localized())", changeText: "signUp".localized(), color: .purple100)
         return label
     }()
-    
-    init(viewModel: LoginViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    @MainActor required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -163,7 +155,7 @@ class LoginViewController: BaseViewController, Keyboardable {
         [tfStackView, forgotPasswordLabel].forEach(bottomStackView.addArrangedSubview)
         [emailTF, passwordTF].forEach(tfStackView.addArrangedSubview)
         
-        self.imageView.snp.makeConstraints { make in
+        imageView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview()
             make.top.equalToSuperview()
             make.height.equalTo(300)
@@ -188,6 +180,11 @@ class LoginViewController: BaseViewController, Keyboardable {
     @objc
     private func closeKeyboard() {
         view.endEditing(true)
+    }
+    
+    @objc
+    private func didTapForPassword() {
+        viewModel.navigateToForgotPassword()
     }
 }
 

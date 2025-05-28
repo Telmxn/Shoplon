@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TrackOrderViewController: BaseViewController {
+class TrackOrderViewController: UIViewController {
     private let mainStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
@@ -54,6 +54,7 @@ class TrackOrderViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         setupUI()
     }
     

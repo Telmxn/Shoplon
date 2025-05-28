@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class NotificationPermissionViewModel {
+final class NotificationPermissionViewModel: BaseViewModel {
     private let router: NotificationPermissionRouter
     
     init(router: NotificationPermissionRouter) {
