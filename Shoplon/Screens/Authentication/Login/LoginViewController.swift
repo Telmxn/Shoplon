@@ -125,26 +125,34 @@ class LoginViewController: BaseViewController, Keyboardable {
         
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil) { [weak self] notification in
             guard let self = self else { return }
-            self.imageView.snp.updateConstraints { make in
-                make.height.equalTo(0)
+            UIView.animate(withDuration: 1, delay: 0) {
+                self.imageView.snp.updateConstraints { make in
+                    make.height.equalTo(1)
+                }
+                self.stackView.snp.remakeConstraints { make in
+                    make.horizontalEdges.equalToSuperview().inset(32)
+                    make.top.equalTo(self.view.safeAreaLayoutGuide)
+                }
+                self.view.layoutIfNeeded()
+            } completion: { progress in
+                self.imageView.isHidden = true
             }
-            self.stackView.snp.remakeConstraints { make in
-                make.horizontalEdges.equalToSuperview().inset(32)
-                make.top.equalTo(self.view.safeAreaLayoutGuide)
-            }
-            self.view.layoutIfNeeded()
         }
         
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: nil) { [weak self] notification in
             guard let self = self else { return }
-            self.imageView.snp.updateConstraints { make in
-                make.height.equalTo(300)
+            imageView.isHidden = false
+            UIView.animate(withDuration: 1) {
+                self.imageView.snp.updateConstraints { make in
+                    make.height.equalTo(300)
+                }
+                self.stackView.snp.remakeConstraints { make in
+                    make.horizontalEdges.equalToSuperview().inset(32)
+                    make.top.equalTo(self.imageView.snp.bottom).offset(24)
+                }
+                self.view.layoutIfNeeded()
             }
-            self.stackView.snp.remakeConstraints { make in
-                make.horizontalEdges.equalToSuperview().inset(32)
-                make.top.equalTo(self.imageView.snp.bottom).offset(24)
-            }
-            self.view.layoutIfNeeded()
+            
         }
     }
     
@@ -155,7 +163,7 @@ class LoginViewController: BaseViewController, Keyboardable {
         [tfStackView, forgotPasswordLabel].forEach(bottomStackView.addArrangedSubview)
         [emailTF, passwordTF].forEach(tfStackView.addArrangedSubview)
         
-        imageView.snp.makeConstraints { make in
+        self.imageView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview()
             make.top.equalToSuperview()
             make.height.equalTo(300)
