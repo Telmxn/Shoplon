@@ -9,7 +9,7 @@ import UIKit
 
 class BaseTextField: UITextField {
     
-    let padding = UIEdgeInsets(top: 0, left: 48, bottom: 0, right: 16)
+    var padding = UIEdgeInsets(top: 0, left: 48, bottom: 0, right: 16)
 
     override open func textRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: padding)
@@ -29,9 +29,10 @@ class BaseTextField: UITextField {
         return view
     }()
     
-    init(logo: UIImage, placeholder: String) {
+    init(logo: UIImage?, placeholder: String?) {
         super.init(frame: .zero)
         configure(logo: logo, placeholder: placeholder)
+        addTarget(self, action: #selector(setNormalState), for: .editingChanged)
         setupUI()
     }
     
@@ -40,6 +41,7 @@ class BaseTextField: UITextField {
     }
     
     private func setupUI() {
+        layer.borderColor = UIColor.red.cgColor
         backgroundColor = .gray10
         layer.cornerRadius = 12
         addSubview(imageView)
@@ -57,8 +59,29 @@ class BaseTextField: UITextField {
         }
     }
     
-    private func configure(logo: UIImage, placeholder: String) {
-        self.placeholder = placeholder
-        imageView.image = logo
+    private func configure(logo: UIImage?, placeholder: String?) {
+        if let placeholder = placeholder {
+            self.placeholder = placeholder
+        }
+        if let logo = logo {
+            imageView.isHidden = false
+            imageView.image = logo
+        } else {
+            imageView.isHidden = true
+            padding = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        }
+    }
+    
+    func setErrorState() {
+        UIView.animate(withDuration: 0.3) {
+            self.layer.borderWidth = 1
+        }
+    }
+    
+    @objc
+    func setNormalState() {
+        UIView.animate(withDuration: 0.3) {
+            self.layer.borderWidth = 0
+        }
     }
 }

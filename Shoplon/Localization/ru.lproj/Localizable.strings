@@ -31,3 +31,13 @@
 "passwordRecovery" = "Восстановление пароля";
 "passwordRecoveryText" = "Введите свою электронную почту для восстановления пароля";
 "login" = "Войти";
+"emailAddress" = "Электронная почта";
+"password" = "Пароль";
+"error" = "Ошибка";
+"close" = "Закрыть";
+"verificationCode" = "Код подтверждения";
+"sentVerificationCode" = "Мы отправили код подтверждения на:";
+"changeEmailAddress" = "Изменить адрес электронной почты?";
+"resendCodeAfter" = "Повторная отправка кода через";
+"resend" = "Отправить повторно";
+"confirm" = "Подтвердить";

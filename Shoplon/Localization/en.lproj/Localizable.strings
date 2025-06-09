@@ -31,3 +31,13 @@
 "passwordRecovery" = "Password recovery";
 "passwordRecoveryText" = "Enter your E-mail address to recover your password";
 "login" = "Log in";
+"emailAddress" = "Email address";
+"password" = "Password";
+"error" = "Error";
+"close" = "Close";
+"verificationCode" = "Verification code";
+"sentVerificationCode" = "We have sent the code verification to";
+"changeEmailAddress" = "Change email address?";
+"resendCodeAfter" = "Resend code after";
+"resend" = "Resend";
+"confirm" = "Confirm";

@@ -31,3 +31,13 @@
 "passwordRecovery" = "Şifrəni bərpa et";
 "passwordRecoveryText" = "Şifrənizi bərpa etmək üçün e-poçt ünvanınızı daxil edin";
 "login" = "Daxil ol";
+"emailAddress" = "E-poçt ünvanı";
+"password" = "Şifrə";
+"error" = "Xəta";
+"close" = "Bağla";
+"verificationCode" = "Təsdiq kodu";
+"sentVerificationCode" = "Təsdiq kodunu bu ünvana göndərdik:";
+"changeEmailAddress" = "E-poçt ünvanını dəyişmək istəyirsiniz?";
+"resendCodeAfter" = "Kodu yenidən göndər:";
+"resend" = "Yenidən göndər";
+"confirm" = "Təsdiqlə";

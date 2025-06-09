@@ -31,4 +31,13 @@
 "passwordRecovery" = "Şifre kurtarma";
 "passwordRecoveryText" = "Şifrenizi kurtarmak için e-posta adresinizi girin";
 "login" = "Giriş yap";
-
+"emailAddress" = "E-posta adresi";
+"password" = "Şifre";
+"error" = "Hata";
+"close" = "Kapat";
+"verificationCode" = "Doğrulama kodu";
+"sentVerificationCode" = "Doğrulama kodunu gönderdik:";
+"changeEmailAddress" = "E-posta adresini değiştirmek ister misiniz?";
+"resendCodeAfter" = "Kodu tekrar gönder:";
+"resend" = "Yeniden gönder";
+"confirm" = "Onayla";

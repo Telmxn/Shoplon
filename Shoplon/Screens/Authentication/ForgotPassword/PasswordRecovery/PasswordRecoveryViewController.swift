@@ -7,8 +7,13 @@
 
 import UIKit
 import SnapKit
+import FirebaseFunctions
 
 class PasswordRecoveryViewController: BaseViewController<PasswordRecoveryViewModel>, Keyboardable {
+    var imageHeight: Int? = 250
+    
+    var keyboardableImageView: UIImageView?
+    
     var targetConstraint: Constraint?
     
     private let imageView: UIImageView = {
@@ -68,12 +73,13 @@ class PasswordRecoveryViewController: BaseViewController<PasswordRecoveryViewMod
     }()
     
     private let emailTF: BaseTextField = {
-        let textField = BaseTextField(logo: .mail, placeholder: "Email address")
+        let textField = BaseTextField(logo: .mail, placeholder: "emailAddress".localized())
         return textField
     }()
     
     private lazy var nextButton: BaseButton = {
         let button = BaseButton(text: "next".localized())
+        button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
         return button
     }()
     
@@ -83,7 +89,7 @@ class PasswordRecoveryViewController: BaseViewController<PasswordRecoveryViewMod
         label.textColor = .black40
         label.text = "\("dontHaveAnAccount".localized()) \("login".localized())"
         label.textAlignment = .center
-        label.halfTextColorChange(fullText: "\("dontHaveAnAccount".localized())\("login".localized())", changeText: "login".localized(), color: .purple100)
+        label.halfTextColorChange(fullText: "\("dontHaveAnAccount".localized())\("login".localized())", changeText: "login".localized(), color: .purple100, font: UIFont.customFont(weight: .medium, size: 14))
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapLogin))
         label.addGestureRecognizer(tapGesture)
         label.isUserInteractionEnabled = true
@@ -92,43 +98,27 @@ class PasswordRecoveryViewController: BaseViewController<PasswordRecoveryViewMod
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let closeKeyboarGesture = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
-        view.addGestureRecognizer(closeKeyboarGesture)
-        
+        keyboardableImageView = imageView
         startKeyboardObserve()
+        bindViewModel()
         setupUI()
         
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil) { [weak self] notification in
             guard let self = self else { return }
-            UIView.animate(withDuration: 1, delay: 0) {
-                self.imageView.snp.updateConstraints { make in
-                    make.height.equalTo(1)
-                }
-                self.stackView.snp.remakeConstraints { make in
-                    make.horizontalEdges.equalToSuperview().inset(32)
-                    make.top.equalTo(self.view.safeAreaLayoutGuide).inset(40)
-                }
-                self.view.layoutIfNeeded()
-            } completion: { progress in
-                self.imageView.isHidden = true
+            self.stackView.snp.remakeConstraints { make in
+                make.horizontalEdges.equalToSuperview().inset(32)
+                make.top.equalTo(self.view.safeAreaLayoutGuide).inset(40)
             }
+            self.view.layoutIfNeeded()
         }
         
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: nil) { [weak self] notification in
             guard let self = self else { return }
-            imageView.isHidden = false
-            UIView.animate(withDuration: 1) {
-                self.imageView.snp.updateConstraints { make in
-                    make.height.equalTo(250)
-                }
-                self.stackView.snp.remakeConstraints { make in
-                    make.horizontalEdges.equalToSuperview().inset(32)
-                    make.top.equalTo(self.imageView.snp.bottom).offset(59)
-                }
-                self.view.layoutIfNeeded()
+            self.stackView.snp.remakeConstraints { make in
+                make.horizontalEdges.equalToSuperview().inset(32)
+                make.top.equalTo(self.imageView.snp.bottom).offset(59)
             }
-            
+            self.view.layoutIfNeeded()
         }
     }
     
@@ -142,7 +132,7 @@ class PasswordRecoveryViewController: BaseViewController<PasswordRecoveryViewMod
         imageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide).inset(40)
-            make.height.equalTo(250)
+            make.height.equalTo(imageHeight ?? 250)
         }
         
         stackView.snp.makeConstraints { make in
@@ -162,12 +152,32 @@ class PasswordRecoveryViewController: BaseViewController<PasswordRecoveryViewMod
     }
     
     @objc
-    private func closeKeyboard() {
-        view.endEditing(true)
+    private func didTapLogin() {
+        viewModel.navigateToLogin()
     }
     
     @objc
-    private func didTapLogin() {
-        viewModel.navigateToLogin()
+    private func didTapNextButton() {
+        if let email = emailTF.text?.lowercased(), !email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            if email.isValidEmail() {
+                viewModel.sendOTPMail(to: email) { [weak self] result in
+                    switch result {
+                    case .success(_):
+                        self?.viewModel.navigateToVerificationCode(with: .init(email: email))
+                    case .failure(let failure):
+                        self?.emailTF.setErrorState()
+                        self?.showErrorAlertAction(message: failure.localizedDescription)
+                    }
+                }
+            } else {
+                self.emailTF.setErrorState()
+            }
+        } else {
+            emailTF.setErrorState()
+        }
+    }
+    
+    override func bindViewModel() {
+        super.bindViewModel()
     }
 }

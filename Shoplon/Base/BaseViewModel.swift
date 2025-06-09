@@ -6,7 +6,8 @@
 //
 
 import Foundation
+import Combine
 
 class BaseViewModel {
-    
+    @Published var isLoading: Bool = false
 }

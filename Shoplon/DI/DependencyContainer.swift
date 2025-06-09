@@ -13,4 +13,8 @@ class DependencyContainer {
     lazy var languageManager: LanguageManager = {
         return LanguageManager()
     }()
+    
+    lazy var firebaseManager: FirebaseManager = {
+        return FirebaseManager(service: FirebaseAdapter())
+    }()
 }

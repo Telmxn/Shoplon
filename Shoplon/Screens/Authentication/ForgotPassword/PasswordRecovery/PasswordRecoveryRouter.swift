@@ -8,18 +8,18 @@
 import UIKit
 
 enum PasswordRecoveryRoute {
-    case chooseVerificationMethod
+    case verificationCode
     case login
 }
 
 final class PasswordRecoveryRouter {
     weak var view: UIViewController?
     
-    func navigate(to route: PasswordRecoveryRoute) {
+    func navigate(to route: PasswordRecoveryRoute, inputData: VerificationCodeInputData?) {
         switch route {
-        case .chooseVerificationMethod:
-            let vc = LoginBuilder().build()
-            view?.navigationController?.setViewControllers([vc], animated: true)
+        case .verificationCode:
+            let vc = VerificationCodeBuilder(inputData: inputData ?? .init(email: "")).build()
+            view?.navigationController?.pushViewController(vc, animated: true)
         case .login:
             view?.navigationController?.popViewController(animated: true)
         }

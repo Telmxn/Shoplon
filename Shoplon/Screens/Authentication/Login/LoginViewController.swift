@@ -10,6 +10,10 @@ import SnapKit
 
 class LoginViewController: BaseViewController<LoginViewModel>, Keyboardable {
     
+    var keyboardableImageView: UIImageView?
+    
+    var imageHeight: Int? = 300
+    
     var targetConstraint: Constraint?
     
     private let imageView: UIImageView = {
@@ -69,12 +73,12 @@ class LoginViewController: BaseViewController<LoginViewModel>, Keyboardable {
     }()
     
     private let emailTF: BaseTextField = {
-        let textField = BaseTextField(logo: .mail, placeholder: "Email address")
+        let textField = BaseTextField(logo: .mail, placeholder: "emailAddress".localized())
         return textField
     }()
     
     private let passwordTF: BaseTextField = {
-        let textField = BaseTextField(logo: .lock, placeholder: "Password")
+        let textField = BaseTextField(logo: .lock, placeholder: "password".localized())
         textField.isSecureTextEntry = true
         return textField
     }()
@@ -102,49 +106,31 @@ class LoginViewController: BaseViewController<LoginViewModel>, Keyboardable {
         label.textColor = .black40
         label.text = "\("dontHaveAnAccount".localized()) \("signUp".localized())"
         label.textAlignment = .center
-        label.halfTextColorChange(fullText: "\("dontHaveAnAccount".localized())\("signUp".localized())", changeText: "signUp".localized(), color: .purple100)
+        label.halfTextColorChange(fullText: "\("dontHaveAnAccount".localized())\("signUp".localized())", changeText: "signUp".localized(), color: .purple100, font: UIFont.customFont(weight: .medium, size: 14))
         return label
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let closeKeyboarGesture = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
-        view.addGestureRecognizer(closeKeyboarGesture)
-        
+        keyboardableImageView = imageView
         startKeyboardObserve()
         setupUI()
-        
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil) { [weak self] notification in
             guard let self = self else { return }
-            UIView.animate(withDuration: 1, delay: 0) {
-                self.imageView.snp.updateConstraints { make in
-                    make.height.equalTo(1)
-                }
-                self.stackView.snp.remakeConstraints { make in
-                    make.horizontalEdges.equalToSuperview().inset(32)
-                    make.top.equalTo(self.view.safeAreaLayoutGuide)
-                }
-                self.view.layoutIfNeeded()
-            } completion: { progress in
-                self.imageView.isHidden = true
+            self.stackView.snp.remakeConstraints { make in
+                make.horizontalEdges.equalToSuperview().inset(32)
+                make.top.equalTo(self.view.safeAreaLayoutGuide)
             }
+            self.view.layoutIfNeeded()
         }
         
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: nil) { [weak self] notification in
             guard let self = self else { return }
-            imageView.isHidden = false
-            UIView.animate(withDuration: 1) {
-                self.imageView.snp.updateConstraints { make in
-                    make.height.equalTo(300)
-                }
-                self.stackView.snp.remakeConstraints { make in
-                    make.horizontalEdges.equalToSuperview().inset(32)
-                    make.top.equalTo(self.imageView.snp.bottom).offset(24)
-                }
-                self.view.layoutIfNeeded()
+            self.stackView.snp.remakeConstraints { make in
+                make.horizontalEdges.equalToSuperview().inset(32)
+                make.top.equalTo(self.imageView.snp.bottom).offset(24)
             }
-            
+            self.view.layoutIfNeeded()
         }
     }
     
@@ -158,7 +144,7 @@ class LoginViewController: BaseViewController<LoginViewModel>, Keyboardable {
         imageView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview()
             make.top.equalToSuperview()
-            make.height.equalTo(300)
+            make.height.equalTo(imageHeight ?? 300)
         }
         
         stackView.snp.makeConstraints { make in
@@ -175,11 +161,6 @@ class LoginViewController: BaseViewController<LoginViewModel>, Keyboardable {
             make.horizontalEdges.equalToSuperview().inset(32)
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
-    }
-    
-    @objc
-    private func closeKeyboard() {
-        view.endEditing(true)
     }
     
     @objc
