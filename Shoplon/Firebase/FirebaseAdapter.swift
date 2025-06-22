@@ -5,10 +5,11 @@
 //  Created by Telman Yusifov on 28.05.25.
 //
 
-import Foundation
+import UIKit
 import FirebaseAuth
 import FirebaseFunctions
 import FirebaseFirestore
+import FirebaseStorage
 
 
 class FirebaseAdapter: FirebaseService {
@@ -35,6 +36,48 @@ class FirebaseAdapter: FirebaseService {
             }
         }
     }
+    
+    func uploadProfileImage(image: UIImage, completion: @escaping (Result<String, any Error>) -> Void) {
+        let compressedImage = image.fixedOrientation().resizedToJPEGCompatible()
+        
+        guard let imageData = compressedImage.jpegData(compressionQuality: 0.75) else {
+            let error = NSError(domain: "ImageConversion", code: -1, userInfo: [
+                NSLocalizedDescriptionKey: "Image conversion to JPEG failed."
+            ])
+            completion(.failure(error))
+            return
+        }
+        
+        guard let uid = auth.currentUser?.uid else {
+            let error = NSError(domain: "FirebaseAuth", code: -1, userInfo: [
+                NSLocalizedDescriptionKey: "No authenticated user found."
+            ])
+            completion(.failure(error))
+            return
+        }
+        
+        let ref = Storage.storage().reference().child("profileImages/\(uid).jpg")
+        
+        ref.putData(imageData, metadata: nil) { _, error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                ref.downloadURL { url, error in
+                    if let error = error {
+                        completion(.failure(error))
+                    } else if let url = url {
+                        completion(.success(url.absoluteString))
+                    } else {
+                        let error = NSError(domain: "FirebaseStorage", code: -1, userInfo: [
+                            NSLocalizedDescriptionKey: "Download URL not available."
+                        ])
+                        completion(.failure(error))
+                    }
+                }
+            }
+        }
+    }
+
     
     func logoutUser() {
         try? auth.signOut()
@@ -96,5 +139,22 @@ class FirebaseAdapter: FirebaseService {
         }
     }
     
-    
+    func fetchUserData(byEmail email: String, completion: @escaping (Result<[String: Any], Error>) -> Void) {
+        db.collection("users")
+            .whereField("email", isEqualTo: email)
+            .limit(to: 1)
+            .getDocuments { snapshot, error in
+                if let error = error {
+                    completion(.failure(error))
+                } else if let document = snapshot?.documents.first {
+                    completion(.success(document.data()))
+                } else {
+                    let error = NSError(domain: "Firestore", code: -1, userInfo: [
+                        NSLocalizedDescriptionKey: "No user found with that email."
+                    ])
+                    completion(.failure(error))
+                }
+            }
+    }
+
 }

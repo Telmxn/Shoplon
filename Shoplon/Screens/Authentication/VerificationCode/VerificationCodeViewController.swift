@@ -17,6 +17,8 @@ class VerificationCodeViewController: BaseViewController<VerificationCodeViewMod
     
     private var email: String?
     
+    private var isVerified: Bool?
+    
     private let imageView: UIImageView = {
         let view = UIImageView()
         view.image = .verificationCode
@@ -114,7 +116,7 @@ class VerificationCodeViewController: BaseViewController<VerificationCodeViewMod
         return view
     }()
     
-    private var resendButton: BaseButton = {
+    private lazy var resendButton: BaseButton = {
         let button = BaseButton(text: "resend".localized())
         button.layer.borderColor = UIColor.gray20.cgColor
         button.layer.borderWidth = 1.5
@@ -122,6 +124,7 @@ class VerificationCodeViewController: BaseViewController<VerificationCodeViewMod
         button.setTitleColor(.gray100, for: .disabled)
         button.setTitleColor(.black, for: .normal)
         button.isEnabled = false
+        button.addTarget(self, action: #selector(didTapResendButton), for: .touchUpInside)
         return button
     }()
     
@@ -132,7 +135,7 @@ class VerificationCodeViewController: BaseViewController<VerificationCodeViewMod
     }()
     
     private var timer: Timer? = nil
-    private var timeLeftSeconds: Int = 5
+    private var timeLeftSeconds: Int = 300
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -143,14 +146,15 @@ class VerificationCodeViewController: BaseViewController<VerificationCodeViewMod
         
         viewModel.fetchInputData { inputData in
             email = inputData.email
+            isVerified = inputData.isVerified
             let text = "\("sentVerificationCode".localized()) \(email ?? "") \("changeEmailAddress".localized())"
             subtitleLabel.text = text
             let underlineAttriString = NSMutableAttributedString(string: text)
             let range1 = (text as NSString).range(of: email ?? "")
-            underlineAttriString.addAttribute(NSAttributedString.Key.font, value: UIFont.customFont(weight: .medium, size: 14), range: range1)
+            underlineAttriString.addAttribute(NSAttributedString.Key.font, value: UIFont.customFont(weight: .medium, size: 14)!, range: range1)
             underlineAttriString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.black, range: range1)
             let range2 = (text as NSString).range(of: "changeEmailAddress".localized())
-            underlineAttriString.addAttribute(NSAttributedString.Key.font, value: UIFont.customFont(weight: .medium, size: 14), range: range2)
+            underlineAttriString.addAttribute(NSAttributedString.Key.font, value: UIFont.customFont(weight: .medium, size: 14)!, range: range2)
             underlineAttriString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.purple100, range: range2)
             subtitleLabel.attributedText = underlineAttriString
         }
@@ -201,6 +205,9 @@ class VerificationCodeViewController: BaseViewController<VerificationCodeViewMod
             resendAfterLabel.isHidden = true
             resendButton.isEnabled = true
             self.timer?.invalidate()
+        } else {
+            resendAfterLabel.isHidden = false
+            resendButton.isEnabled = false
         }
     }
     
@@ -225,18 +232,29 @@ class VerificationCodeViewController: BaseViewController<VerificationCodeViewMod
         
         buttonsStackView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview().inset(32)
-            targetConstraint = make.bottom.equalTo(view.safeAreaLayoutGuide).inset(40).constraint
+            targetConstraint = make.bottom.equalTo(view.safeAreaLayoutGuide).inset(24).constraint
         }
     }
     
     @objc
-    private func didTapLogin() {
-        
+    private func didTapNextButton() {
+        checkOTPCompletion()
     }
     
     @objc
-    private func didTapNextButton() {
-        
+    private func didTapResendButton() {
+        viewModel.sendOTPMail(to: email ?? "") { result in
+            switch result {
+            case .success(_):
+                self.timeLeftSeconds = 300
+                self.scheduleTimeLeft()
+                self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { timer in
+                    self.scheduleTimeLeft()
+                })
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     
     override func bindViewModel() {
@@ -250,7 +268,11 @@ class VerificationCodeViewController: BaseViewController<VerificationCodeViewMod
         let changePhoneNumberRange = (text as NSString).range(of: "changeEmailAddress".localized())
 
         if gesture.didTapAttributedTextInLabel(label: subtitleLabel, inRange: changePhoneNumberRange) {
-            viewModel.navigateToPasswordRecovery()
+            if isVerified ?? true {
+                viewModel.navigateToPasswordRecovery()
+            } else {
+                viewModel.navigateToRegister()
+            }
         }
     }
     
@@ -285,20 +307,26 @@ class VerificationCodeViewController: BaseViewController<VerificationCodeViewMod
             return partialResult + text
         }
         if otp.count == 4 {
-            viewModel.verifyOTP(email: email ?? "", code: otp) { result in
-                switch result {
-                case .success(let isVerified):
-                    self.timer?.invalidate()
-                    print(isVerified)
-                case .failure(let error):
-                    print(error)
-                    self.otpFields.forEach { input in
-                        input.text = ""
-                        input.setErrorState()
-                    }
-                    self.showErrorAlertAction(message: error.localizedDescription)
-                }
-            }
+//            viewModel.verifyOTP(email: email ?? "", code: otp) { [weak self] result in
+//                guard let self = self else {return}
+//                switch result {
+//                case .success(_):
+//                    self.timer?.invalidate()
+//                    if isVerified ?? true {
+//                        self.viewModel.navigateToSetNewPassword()
+//                    } else {
+//                        self.viewModel.navigateToVerifiedSuccessfully()
+//                    }
+//                case .failure(let error):
+//                    print(error)
+//                    self.otpFields.forEach { input in
+//                        input.text = ""
+//                        input.setErrorState()
+//                    }
+//                    self.showErrorAlertAction(message: error.localizedDescription)
+//                }
+//            }
+            viewModel.navigateToVerifiedSuccessfully()
         }
     }
 }

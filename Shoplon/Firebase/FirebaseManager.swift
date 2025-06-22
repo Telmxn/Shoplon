@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseAuth
+import UIKit
 
 class FirebaseManager {
     private let service: FirebaseService
@@ -21,6 +22,10 @@ class FirebaseManager {
     
     func signUp(email: String, password: String, completion: @escaping (Result<User, Error>) -> Void) {
         service.signUp(email: email, password: password, completion: completion)
+    }
+    
+    func uploadProfileImage(image: UIImage, completion: @escaping (Result<String, any Error>) -> Void) {
+        service.uploadProfileImage(image: image, completion: completion)
     }
     
     func logoutUser() {
@@ -49,5 +54,9 @@ class FirebaseManager {
     
     func fetchUserData(uid: String, completion: @escaping (Result<[String: Any], Error>) -> Void) {
         service.fetchUserData(uid: uid, completion: completion)
+    }
+    
+    func fetchUserData(byEmail email: String, completion: @escaping (Result<[String: Any], Error>) -> Void) {
+        service.fetchUserData(byEmail: email, completion: completion)
     }
 }

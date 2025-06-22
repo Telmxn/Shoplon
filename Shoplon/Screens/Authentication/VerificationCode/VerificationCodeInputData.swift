@@ -9,4 +9,5 @@ import Foundation
 
 struct VerificationCodeInputData {
     let email: String
+    let isVerified: Bool
 }

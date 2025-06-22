@@ -17,7 +17,7 @@ final class SetNewPasswordRouter {
     func navigate(to route: SetNewPasswordRoute) {
         switch route {
         case .success:
-            let vc = LoginBuilder().build()
+            let vc = SuccessfullPasswordChangedViewController()
             view?.navigationController?.setViewControllers([vc], animated: true)
         }
     }

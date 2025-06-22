@@ -18,7 +18,7 @@ final class PasswordRecoveryRouter {
     func navigate(to route: PasswordRecoveryRoute, inputData: VerificationCodeInputData?) {
         switch route {
         case .verificationCode:
-            let vc = VerificationCodeBuilder(inputData: inputData ?? .init(email: "")).build()
+            let vc = VerificationCodeBuilder(inputData: inputData ?? .init(email: "", isVerified: true)).build()
             view?.navigationController?.pushViewController(vc, animated: true)
         case .login:
             view?.navigationController?.popViewController(animated: true)

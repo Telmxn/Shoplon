@@ -163,7 +163,7 @@ class PasswordRecoveryViewController: BaseViewController<PasswordRecoveryViewMod
                 viewModel.sendOTPMail(to: email) { [weak self] result in
                     switch result {
                     case .success(_):
-                        self?.viewModel.navigateToVerificationCode(with: .init(email: email))
+                        self?.viewModel.navigateToVerificationCode(with: .init(email: email, isVerified: true))
                     case .failure(let failure):
                         self?.emailTF.setErrorState()
                         self?.showErrorAlertAction(message: failure.localizedDescription)

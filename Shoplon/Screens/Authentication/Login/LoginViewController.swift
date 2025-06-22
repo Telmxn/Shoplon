@@ -97,16 +97,19 @@ class LoginViewController: BaseViewController<LoginViewModel>, Keyboardable {
     
     private lazy var loginButton: BaseButton = {
         let button = BaseButton(text: "login".localized())
+        button.addTarget(self, action: #selector(didTapLoginButton), for: .touchUpInside)
         return button
     }()
     
-    private var dontHaveAccountLabel: UILabel = {
+    private lazy var dontHaveAccountLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.customFont(weight: .regular, size: 14)
         label.textColor = .black40
         label.text = "\("dontHaveAnAccount".localized()) \("signUp".localized())"
         label.textAlignment = .center
         label.halfTextColorChange(fullText: "\("dontHaveAnAccount".localized())\("signUp".localized())", changeText: "signUp".localized(), color: .purple100, font: UIFont.customFont(weight: .medium, size: 14))
+        label.isUserInteractionEnabled = true
+        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapLabel(gesture:))))
         return label
     }()
     
@@ -166,6 +169,41 @@ class LoginViewController: BaseViewController<LoginViewModel>, Keyboardable {
     @objc
     private func didTapForPassword() {
         viewModel.navigateToForgotPassword()
+    }
+    
+    @objc
+    func tapLabel(gesture: UITapGestureRecognizer) {
+        let text = "\("dontHaveAnAccount".localized()) \("signUp".localized())"
+        
+        let signUpRange = (text as NSString).range(of: "signUp".localized())
+
+        if gesture.didTapAttributedTextInLabel(label: dontHaveAccountLabel, inRange: signUpRange) {
+            viewModel.navigateToSignUp()
+        }
+    }
+    
+    @objc
+    private func didTapLoginButton() {
+        if let email = emailTF.text?.lowercased(), !email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, let password = passwordTF.text, !password.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            if email.isValidEmail() && password.isValidPassword() {
+                viewModel.login(with: email, password: password) { [weak self] result in
+                    switch result {
+                    case .success(let success):
+                        print("Kecdi")
+                    case .failure(let failure):
+                        self?.emailTF.setErrorState()
+                        self?.passwordTF.setErrorState()
+                        self?.showErrorAlertAction(message: failure.localizedDescription)
+                    }
+                }
+            } else {
+                self.emailTF.setErrorState()
+                self.passwordTF.setErrorState()
+            }
+        } else {
+            emailTF.setErrorState()
+            passwordTF.setErrorState()
+        }
     }
 }
 

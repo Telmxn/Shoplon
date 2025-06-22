@@ -18,11 +18,19 @@ final class VerificationCodeViewModel: BaseViewModel {
     }
     
     func navigateToPasswordRecovery() {
-        router.navigate(to: .passwordRecovery)
+        router.navigate(to: .passwordRecovery, inputData: nil)
     }
     
     func navigateToSetNewPassword() {
-        router.navigate(to: .setNewPassword)
+        router.navigate(to: .setNewPassword, inputData: .init(email: inputData.email))
+    }
+    
+    func navigateToVerifiedSuccessfully() {
+        router.navigate(to: .successfullVerification, inputData: nil)
+    }
+    
+    func navigateToRegister() {
+        router.navigate(to: .register, inputData: nil)
     }
     
     func fetchInputData(completion: (VerificationCodeInputData)->()) {

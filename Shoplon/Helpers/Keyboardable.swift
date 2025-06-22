@@ -38,7 +38,6 @@ extension Keyboardable where Self: UIViewController {
                     make.height.equalTo(1)
                 }
                 imageView.alpha = 0
-                self.view.layoutIfNeeded()
             }
             
             self.view.layoutIfNeeded()
@@ -53,7 +52,6 @@ extension Keyboardable where Self: UIViewController {
                     make.height.equalTo(self.imageHeight ?? 250)
                 }
                 imageView.alpha = 1
-                self.view.layoutIfNeeded()
             }
             
             self.view.layoutIfNeeded()

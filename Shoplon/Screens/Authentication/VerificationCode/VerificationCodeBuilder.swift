@@ -7,7 +7,7 @@
 
 import UIKit
 
-class VerificationCodeBuilder {
+final class VerificationCodeBuilder {
     private let inputData: VerificationCodeInputData
     
     init(inputData: VerificationCodeInputData) {

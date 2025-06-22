@@ -1,5 +1,5 @@
 {
-  "originHash" : "cfcef2cc1e7c5af2fe142ed52039f1e4211d12b6294664ab69dececb54275883",
+  "originHash" : "acc9e09372c7dd269a4cdc745f018df0eca995e43ec9d0609cc2f508d6065107",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -83,6 +83,15 @@
       }
     },
     {
+      "identity" : "kingfisher",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/onevcat/Kingfisher.git",
+      "state" : {
+        "revision" : "7deda23bbdca612076c5c315003d8638a08ed0f1",
+        "version" : "8.3.2"
+      }
+    },
+    {
       "identity" : "leveldb",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/firebase/leveldb.git",
@@ -107,6 +116,15 @@
       "state" : {
         "revision" : "121455c4e630fcb95aaefd7e4257b0c2e3cfe6d5",
         "version" : "5.2.0"
+      }
+    },
+    {
+      "identity" : "phonenumberkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/marmelroy/PhoneNumberKit",
+      "state" : {
+        "revision" : "24af4d5147fc42e97cb6cb3761d5d9933d41c240",
+        "version" : "4.1.0"
       }
     },
     {

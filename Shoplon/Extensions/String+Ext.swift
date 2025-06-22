@@ -13,4 +13,10 @@ extension String {
         let emailPredicate = NSPredicate(format: "SELF MATCHES[c] %@", emailRegex)
         return emailPredicate.evaluate(with: self)
     }
+    
+    func isValidPassword() -> Bool {
+        let passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*(),.?\":{}|<>]).{8,}$"
+        let passwordTest = NSPredicate(format: "SELF MATCHES %@", passwordRegex)
+        return passwordTest.evaluate(with: self)
+    }
 }

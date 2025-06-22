@@ -20,4 +20,17 @@ final class SetNewPasswordViewModel: BaseViewModel {
     func navigateToSuccess() {
         router.navigate(to: .success)
     }
+    
+    func changePassword(password: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        isLoading = true
+        DependencyContainer.shared.firebaseManager.resetPassword(email: inputData.email, newPassword: password) { result in
+            self.isLoading = false
+            switch result {
+            case .success(let success):
+                completion(.success(success))
+            case .failure(let failure):
+                completion(.failure(failure))
+            }
+        }
+    }
 }

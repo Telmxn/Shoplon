@@ -38,6 +38,19 @@ enum Language: String, CaseIterable {
             return .ru
         }
     }
+    
+    var locale: String {
+        switch self {
+        case .az:
+            return "az"
+        case .en:
+            return "en_US"
+        case .tr:
+            return "tr_TR"
+        case .ru:
+            return "ru"
+        }
+    }
 }
 
 class LanguageManager {

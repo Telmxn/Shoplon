@@ -21,8 +21,8 @@ final class LoginRouter {
             let vc = PasswordRecoveryBuilder().build()
             view?.navigationController?.pushViewController(vc, animated: true)
         case .signUp:
-            let vc = PasswordRecoveryBuilder().build()
-            view?.navigationController?.pushViewController(vc, animated: true)
+            let vc = SignUpBuilder().build()
+            view?.navigationController?.setViewControllers([vc], animated: true)
         }
     }
 }
