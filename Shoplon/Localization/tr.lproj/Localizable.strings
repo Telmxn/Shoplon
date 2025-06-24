@@ -62,3 +62,10 @@
 "whoohooo" = "Vay canına!";
 "emailVerifiedSuccessfully" = "E-posta adresiniz başarıyla doğrulandı.";
 "goToShopping" = "Alışverişe git";
+"howFingerprint" = "Parmak izi nasıl ayarlanır";
+"howFaceID" = "Face ID nasıl ayarlanır";
+"fingerprintText" = "Parmağınızı sensöre yerleştirin ve tekrar tekrar kaldırın. Her seferinde hafifçe hareket ettirerek tüm alanları taratın.";
+"faceIDText" = "Yüzünüzü kamera çerçevesine yerleştirin, ardından başınızı yavaşça daire şeklinde hareket ettirerek tüm açılardan gösterin.";
+"setupFingerprint" = "Parmak izini ayarla";
+"setupFaceid" = "Face ID'yi ayarla";
+"findSomething" = "Bir şeyler bulun...";

@@ -26,8 +26,7 @@ final class VerificationCodeRouter {
             view?.navigationController?.pushViewController(vc, animated: true)
         case .successfullVerification:
             let vc = VerifiedSuccessfullyBuilder().build()
-            vc.modalPresentationStyle = .fullScreen
-            view?.present(vc, animated: true)
+            view?.navigationController?.setViewControllers([vc], animated: true)
         case .register:
             let vc = SignUpBuilder().build()
             view?.navigationController?.setViewControllers([vc], animated: true)

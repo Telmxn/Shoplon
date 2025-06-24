@@ -17,4 +17,8 @@ class DependencyContainer {
     lazy var firebaseManager: FirebaseManager = {
         return FirebaseManager(service: FirebaseAdapter())
     }()
+    
+    lazy var userDefaultsManager: UserDefaultsManager = {
+        return UserDefaultsManager()
+    }()
 }

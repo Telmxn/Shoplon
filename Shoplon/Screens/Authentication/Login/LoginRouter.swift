@@ -10,6 +10,7 @@ import UIKit
 enum LoginRoute {
     case forgotPassword
     case signUp
+    case home
 }
 
 final class LoginRouter {
@@ -23,6 +24,9 @@ final class LoginRouter {
         case .signUp:
             let vc = SignUpBuilder().build()
             view?.navigationController?.setViewControllers([vc], animated: true)
+        case .home:
+            let tabBar = BaseTabBarController()
+            view?.navigationController?.setViewControllers([tabBar], animated: true)
         }
     }
 }

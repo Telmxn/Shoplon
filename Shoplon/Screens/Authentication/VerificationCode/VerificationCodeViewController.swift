@@ -307,26 +307,25 @@ class VerificationCodeViewController: BaseViewController<VerificationCodeViewMod
             return partialResult + text
         }
         if otp.count == 4 {
-//            viewModel.verifyOTP(email: email ?? "", code: otp) { [weak self] result in
-//                guard let self = self else {return}
-//                switch result {
-//                case .success(_):
-//                    self.timer?.invalidate()
-//                    if isVerified ?? true {
-//                        self.viewModel.navigateToSetNewPassword()
-//                    } else {
-//                        self.viewModel.navigateToVerifiedSuccessfully()
-//                    }
-//                case .failure(let error):
-//                    print(error)
-//                    self.otpFields.forEach { input in
-//                        input.text = ""
-//                        input.setErrorState()
-//                    }
-//                    self.showErrorAlertAction(message: error.localizedDescription)
-//                }
-//            }
-            viewModel.navigateToVerifiedSuccessfully()
+            viewModel.verifyOTP(email: email ?? "", code: otp) { [weak self] result in
+                guard let self = self else {return}
+                switch result {
+                case .success(_):
+                    self.timer?.invalidate()
+                    if isVerified ?? true {
+                        self.viewModel.navigateToSetNewPassword()
+                    } else {
+                        self.viewModel.navigateToVerifiedSuccessfully()
+                    }
+                case .failure(let error):
+                    print(error)
+                    self.otpFields.forEach { input in
+                        input.text = ""
+                        input.setErrorState()
+                    }
+                    self.showErrorAlertAction(message: error.localizedDescription)
+                }
+            }
         }
     }
 }

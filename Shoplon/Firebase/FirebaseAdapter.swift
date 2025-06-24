@@ -22,6 +22,7 @@ class FirebaseAdapter: FirebaseService {
             if let error = error {
                 completion(.failure(error))
             } else if let user = result?.user {
+                DependencyContainer.shared.userDefaultsManager.save(key: .userLoggedIn, value: true)
                 completion(.success(user))
             }
         }

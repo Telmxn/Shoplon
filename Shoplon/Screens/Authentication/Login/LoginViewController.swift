@@ -118,6 +118,7 @@ class LoginViewController: BaseViewController<LoginViewModel>, Keyboardable {
         keyboardableImageView = imageView
         startKeyboardObserve()
         setupUI()
+        DependencyContainer.shared.userDefaultsManager.save(key: .seenOnboarding, value: true)
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil) { [weak self] notification in
             guard let self = self else { return }
             self.stackView.snp.remakeConstraints { make in
@@ -188,8 +189,8 @@ class LoginViewController: BaseViewController<LoginViewModel>, Keyboardable {
             if email.isValidEmail() && password.isValidPassword() {
                 viewModel.login(with: email, password: password) { [weak self] result in
                     switch result {
-                    case .success(let success):
-                        print("Kecdi")
+                    case .success(_):
+                        self?.viewModel.navigateToHome()
                     case .failure(let failure):
                         self?.emailTF.setErrorState()
                         self?.passwordTF.setErrorState()
@@ -204,6 +205,10 @@ class LoginViewController: BaseViewController<LoginViewModel>, Keyboardable {
             emailTF.setErrorState()
             passwordTF.setErrorState()
         }
+    }
+    
+    override func bindViewModel() {
+        super.bindViewModel()
     }
 }
 

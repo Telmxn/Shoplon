@@ -62,3 +62,10 @@
 "whoohooo" = "Whoohooo!";
 "emailVerifiedSuccessfully" = "Your Email has been verified succesfully.";
 "goToShopping" = "Go to shopping";
+"howFingerprint" = "How to set up Fingerprint";
+"howFaceID" = "How to set up Face ID";
+"fingerprintText" = "Place your finger on the sensor and lift it repeatedly. Move your finger slightly each time to capture all areas.";
+"faceIDText" = "Position your face in the camera frame, then slowly move your head in a circle to show all the angles of your face.";
+"setupFingerprint" = "Set up Fingerprint";
+"setupFaceid" = "Set up FaceID";
+"findSomething" = "Find something...";

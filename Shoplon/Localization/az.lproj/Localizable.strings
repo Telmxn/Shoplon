@@ -62,3 +62,10 @@
 "whoohooo" = "Vaaau!";
 "emailVerifiedSuccessfully" = "E-poçt ünvanınız uğurla təsdiqləndi.";
 "goToShopping" = "Alış-verişə başla";
+"howFingerprint" = "Barmaq izi necə qurulur";
+"howFaceID" = "Face ID necə qurulur";
+"fingerprintText" = "Barmağınızı sensorun üzərinə qoyun və bir neçə dəfə qaldırıb yenidən toxundurun. Hər dəfə bir az hərəkət etdirərək bütün hissələri skan edin.";
+"faceIDText" = "Üzünüzü kamera çərçivəsində yerləşdirin, sonra başınızı yavaş-yavaş dairəvi şəkildə hərəkət etdirin ki, üzünüzün bütün bucaqları görünsün.";
+"setupFingerprint" = "Barmaq izini qur";
+"setupFaceid" = "Face ID-ni qur";
+"findSomething" = "Nə isə axtarın...";

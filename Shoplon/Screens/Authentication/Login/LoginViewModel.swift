@@ -23,6 +23,10 @@ final class LoginViewModel: BaseViewModel {
         router.navigate(to: .signUp)
     }
     
+    func navigateToHome() {
+        router.navigate(to: .home)
+    }
+    
     func login(with email: String, password: String, completion: @escaping (Result<User, Error>) -> ()) {
         isLoading = true
         DependencyContainer.shared.firebaseManager.login(email: email, password: password) { result in

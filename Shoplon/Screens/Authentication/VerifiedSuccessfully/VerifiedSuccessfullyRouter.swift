@@ -17,9 +17,8 @@ final class VerifiedSuccessfullyRouter {
     func navigate(to route: VerifiedSuccessfullyRoute) {
         switch route {
         case .setupPrivacy:
-            let vc = SignUpBuilder().build()
-            vc.modalPresentationStyle = .overFullScreen
-            view?.present(vc, animated: true)
+            let vc = SetUpPrivacyBuilder().build()
+            view?.navigationController?.setViewControllers([vc], animated: true)
         }
     }
 }
