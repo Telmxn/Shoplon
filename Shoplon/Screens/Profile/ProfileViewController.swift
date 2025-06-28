@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 final class ProfileViewController: BaseViewController<ProfileViewModel> {
     private let headerView: HeaderView = {
@@ -23,7 +24,7 @@ final class ProfileViewController: BaseViewController<ProfileViewModel> {
         
         headerView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
-            make.horizontalEdges.equalToSuperview()
+            make.horizontalEdges.equalToSuperview().inset(32)
         }
     }
 }

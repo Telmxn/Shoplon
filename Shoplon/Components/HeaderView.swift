@@ -87,7 +87,7 @@ class HeaderView: UIView {
             .forEach(rightStackView.addArrangedSubview)
         
         stackView.snp.makeConstraints { make in
-            make.horizontalEdges.equalToSuperview().inset(32)
+            make.edges.equalToSuperview()
         }
         
         messageImageView.snp.makeConstraints { make in

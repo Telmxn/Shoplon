@@ -55,7 +55,6 @@ class SearchTextField: UITextField {
     
     init() {
         super.init(frame: .zero)
-        addTarget(self, action: #selector(setNormalState), for: .editingChanged)
         setupUI()
         self.placeholder = "findSomething".localized()
     }
@@ -98,19 +97,6 @@ class SearchTextField: UITextField {
         
         filterImageView.snp.makeConstraints { make in
             make.size.equalTo(24)
-        }
-    }
-    
-    func setErrorState() {
-        UIView.animate(withDuration: 0.3) {
-            self.layer.borderWidth = 1
-        }
-    }
-    
-    @objc
-    func setNormalState() {
-        UIView.animate(withDuration: 0.3) {
-            self.layer.borderWidth = 0
         }
     }
     

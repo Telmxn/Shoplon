@@ -20,4 +20,5 @@ protocol FirebaseService {
     func saveUserData(uid: String, data: [String: Any], completion: @escaping (Error?) -> Void)
     func fetchUserData(uid: String, completion: @escaping (Result<[String: Any], Error>) -> Void)
     func fetchUserData(byEmail email: String, completion: @escaping (Result<[String: Any], Error>) -> Void)
+    func fetchCategories(completion: @escaping (Result<[CategoryModel], Error>) -> Void)
 }

@@ -59,4 +59,8 @@ class FirebaseManager {
     func fetchUserData(byEmail email: String, completion: @escaping (Result<[String: Any], Error>) -> Void) {
         service.fetchUserData(byEmail: email, completion: completion)
     }
+    
+    func fetchCategories(completion: @escaping (Result<[CategoryModel], Error>) -> Void) {
+        service.fetchCategories(completion: completion)
+    }
 }

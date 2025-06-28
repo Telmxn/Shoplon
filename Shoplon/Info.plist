@@ -9,6 +9,18 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>PlusJakartaSans-VariableFont.ttf</string>
+		<string>GrandisExtended-Black.ttf</string>
+		<string>GrandisExtended-BlackItalic.ttf</string>
+		<string>GrandisExtended-Bold.ttf</string>
+		<string>GrandisExtended-BoldItalic.ttf</string>
+		<string>GrandisExtended-Light.ttf</string>
+		<string>GrandisExtended-LightItalic.ttf</string>
+		<string>GrandisExtended-Medium.ttf</string>
+		<string>GrandisExtended-MediumItalic.ttf</string>
+		<string>GrandisExtended-Regular.ttf</string>
+		<string>GrandisExtended-RegularItalic.ttf</string>
+		<string>GrandisExtended-Thin.ttf</string>
+		<string>GrandisExtended-ThinItalic.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

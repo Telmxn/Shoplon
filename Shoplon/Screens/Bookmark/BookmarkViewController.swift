@@ -23,7 +23,7 @@ final class BookmarkViewController: BaseViewController<BookmarkViewModel> {
         
         headerView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
-            make.horizontalEdges.equalToSuperview()
+            make.horizontalEdges.equalToSuperview().inset(32)
         }
     }
 }

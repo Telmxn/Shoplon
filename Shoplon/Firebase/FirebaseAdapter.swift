@@ -157,5 +157,18 @@ class FirebaseAdapter: FirebaseService {
                 }
             }
     }
-
+    
+    func fetchCategories(completion: @escaping (Result<[CategoryModel], Error>) -> Void) {
+        db.collection("categories").getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error getting documents: \(error)")
+            } else if let snapshot = querySnapshot {
+                let categories: [CategoryModel] = snapshot.documents.map { document in
+                    let data = document.data()
+                    return .init(id: document.documentID, name: data["name"] as! String, imageUrl: data["imageUrl"] as! String, iconUrl: data["iconUrl"] as! String)
+                }
+                completion(.success(categories))
+            }
+        }
+    }
 }

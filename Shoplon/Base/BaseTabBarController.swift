@@ -21,7 +21,18 @@ final class BaseTabBarController: UITabBarController {
         tabBar.unselectedItemTintColor = .black
         tabBar.itemPositioning = .centered
         setupViewControllers()
+        setupTabBarShadow()
+        setupTabBarItemsPadding()
         DependencyContainer.shared.userDefaultsManager.save(key: .userLoggedIn, value: true)
+    }
+    
+    private func setupTabBarShadow() {
+        tabBar.layer.shadowColor = UIColor.black.cgColor
+        tabBar.layer.shadowOffset = CGSize(width: 0, height: 0)
+        tabBar.layer.shadowOpacity = 0.04
+        tabBar.layer.shadowRadius = 8
+        tabBar.layer.shadowPath = UIBezierPath(rect: tabBar.bounds).cgPath
+        tabBar.clipsToBounds = false
     }
     
     private func setupViewControllers() {
@@ -34,6 +45,14 @@ final class BaseTabBarController: UITabBarController {
         tabBar.tintColor = .purple100
         tabBar.backgroundColor = .white
         setViewControllers([shopVC, discoverVC, bookmarkVC, cartVC, profileVC], animated: true)
+    }
+    
+    private func setupTabBarItemsPadding() {
+        if let items = tabBar.items {
+            for item in items {
+                item.imageInsets = UIEdgeInsets(top: 10, left: 0, bottom: -10, right: 0)
+            }
+        }
     }
     
     private func wrapViewController(child: UIViewController, image: UIImage?) -> UIViewController {
