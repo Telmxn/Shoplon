@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TrackOrderViewController: BaseViewController {
+class TrackOrderViewController: UIViewController {
     private let mainStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
@@ -34,7 +34,7 @@ class TrackOrderViewController: BaseViewController {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Package tracking"
+        label.text = "onboarding4title".localized()
         label.font = UIFont.customFont(weight: .medium, size: 32)
         label.textColor = .black
         label.numberOfLines = 0
@@ -44,7 +44,7 @@ class TrackOrderViewController: BaseViewController {
     
     private let subtitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "In particular, Shoplon can pack your orders, and help you seamlessly manage your shipments."
+        label.text = "onboarding4subtitle".localized()
         label.font = UIFont.customFont(weight: .regular, size: 14)
         label.textColor = .black40
         label.numberOfLines = 0
@@ -54,6 +54,7 @@ class TrackOrderViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         setupUI()
     }
     

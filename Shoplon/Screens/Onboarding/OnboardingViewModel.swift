@@ -7,14 +7,14 @@
 
 import Foundation
 
-final class OnboardingViewModel {
+final class OnboardingViewModel: BaseViewModel {
     private let router: OnboardingRouter
     
     init(router: OnboardingRouter) {
         self.router = router
     }
     
-    func navigateToWelcome() {
-        router.navigate(to: .welcome)
+    func navigateToNotificationPermission() {
+        router.navigate(to: .notificationPermission)
     }
 }

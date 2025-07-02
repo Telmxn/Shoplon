@@ -1,0 +1,77 @@
+/* 
+  Localizable.strings
+  Shoplon
+
+  Created by Telman Yusifov on 22.05.25.
+  
+*/
+
+"next" = "İleri";
+"skip" = "Geç";
+"notifications" = "Bildirimler";
+"onboarding1title" = "Aradığınız ürünü bulun";
+"onboarding1subtitle" = "Burada, sorunsuz bir gezinme deneyimi için özenle sınıflandırılmış zengin ürün çeşitlerini göreceksiniz.";
+"onboarding2title" = "Alışveriş çantalarını doldur";
+"onboarding2subtitle" = "Gelecekteki alışverişlerinizde kaçırmamak için istediğiniz ürünü sepetinize ekleyin veya istek listenize kaydedin.";
+"onboarding3title" = "Hızlı ve güvenli ödeme";
+"onboarding3subtitle" = "Kolaylık sağlaması için birçok ödeme seçeneği mevcuttur.";
+"onboarding4title" = "Paket takibi";
+"onboarding4subtitle" = "Özellikle Shoplon siparişlerinizi paketleyebilir ve gönderilerinizi kolayca yönetmenize yardımcı olabilir.";
+"onboarding5title" = "Yakındaki mağazalar";
+"onboarding5subtitle" = "Yakındaki mağazaları kolayca takip edin, ürünlerine göz atın ve onlar hakkında bilgi alın.";
+"notificationpermissiontitle" = "En yeni teklifleri ve ürün stok durumunu bildirin";
+"notificationpermissionsubtitle" = "Shoplon bildirimlerini etkinleştirerek en son haberlerden herkesten önce haberdar olun.";
+"selectlanguagetitle" = "Tercih ettiğiniz dili seçin";
+"selectlanguagesubtitle" = "Uygulama boyunca aynı dili kullanacaksınız.";
+"welcomeback" = "Tekrar hoş geldiniz!";
+"logintext" = "Kayıt sırasında girdiğiniz bilgilerle giriş yapın.";
+"forgotpassword" = "Şifremi unuttum";
+"dontHaveAnAccount" = "Hesabınız yok mu?";
+"doYouHaveAnAccount" = "Bir hesabınız var mı?";
+"signUp" = "Kayıt ol";
+"passwordRecovery" = "Şifre kurtarma";
+"passwordRecoveryText" = "Şifrenizi kurtarmak için e-posta adresinizi girin";
+"login" = "Giriş yap";
+"emailAddress" = "E-posta adresi";
+"password" = "Şifre";
+"error" = "Hata";
+"close" = "Kapat";
+"verificationCode" = "Doğrulama kodu";
+"sentVerificationCode" = "Doğrulama kodunu gönderdik:";
+"changeEmailAddress" = "E-posta adresini değiştirmek ister misiniz?";
+"resendCodeAfter" = "Kodu tekrar gönder:";
+"resend" = "Yeniden gönder";
+"confirm" = "Onayla";
+"setNewPassword" = "Yeni şifre belirle";
+"newPasswordText" = "Yeni şifreniz daha önce kullandığınız şifrelerden farklı olmalıdır.";
+"newPassword" = "Yeni şifre";
+"newPasswordAgain" = "Yeni şifre (tekrar)";
+"changePassword" = "Şifreyi değiştir";
+"passwordSucessfullText" = "Şifreniz başarıyla değiştirildi!";
+"letsGetStarted" = "Haydi başlayalım!";
+"signUpText" = "Hesap oluşturmak için lütfen geçerli bilgilerinizi girin.";
+"iAgreeTermsAndPolicy" = "Hizmet şartları ve gizlilik politikasını kabul ediyorum.";
+"termsOfService" = "Hizmet şartları";
+"continue" = "Devam et";
+"lastUpdated" = "Son güncelleme";
+"setupProfile" = "Profili ayarla";
+"fullName" = "Tam ad";
+"dateOfBirth" = "Doğum tarihi";
+"phoneNumber" = "Telefon numarası";
+"uploadImage" = "Görsel yükle";
+"whoohooo" = "Vay canına!";
+"emailVerifiedSuccessfully" = "E-posta adresiniz başarıyla doğrulandı.";
+"goToShopping" = "Alışverişe git";
+"howFingerprint" = "Parmak izi nasıl ayarlanır";
+"howFaceID" = "Face ID nasıl ayarlanır";
+"fingerprintText" = "Parmağınızı sensöre yerleştirin ve tekrar tekrar kaldırın. Her seferinde hafifçe hareket ettirerek tüm alanları taratın.";
+"faceIDText" = "Yüzünüzü kamera çerçevesine yerleştirin, ardından başınızı yavaşça daire şeklinde hareket ettirerek tüm açılardan gösterin.";
+"setupFingerprint" = "Parmak izini ayarla";
+"setupFaceid" = "Face ID'yi ayarla";
+"findSomething" = "Bir şeyler bulun...";
+"categories" = "Kategoriler";
+"allCategories" = "Tüm kategoriler";
+"popularProducts" = "Popüler ürünler";
+"off" = "İndirim";
+"mostPopular" = "En popüler";
+"bestSellers" = "En çok satanlar";

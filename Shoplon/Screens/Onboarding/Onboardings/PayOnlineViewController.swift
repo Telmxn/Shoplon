@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PayOnlineViewController: BaseViewController {
+class PayOnlineViewController: UIViewController {
     private let mainStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
@@ -34,7 +34,7 @@ class PayOnlineViewController: BaseViewController {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Fast & secure payment"
+        label.text = "onboarding3title".localized()
         label.font = UIFont.customFont(weight: .medium, size: 32)
         label.textColor = .black
         label.numberOfLines = 0
@@ -44,7 +44,7 @@ class PayOnlineViewController: BaseViewController {
     
     private let subtitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "There are many payment options available for your ease."
+        label.text = "onboarding3subtitle".localized()
         label.font = UIFont.customFont(weight: .regular, size: 14)
         label.textColor = .black40
         label.numberOfLines = 0
@@ -54,6 +54,7 @@ class PayOnlineViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         setupUI()
     }
     

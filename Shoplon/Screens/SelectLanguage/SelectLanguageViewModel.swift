@@ -6,3 +6,15 @@
 //
 
 import Foundation
+
+final class SelectLanguageViewModel: BaseViewModel {
+    private let router: SelectLanguageRouter
+    
+    init(router: SelectLanguageRouter) {
+        self.router = router
+    }
+    
+    func navigateToLogin() {
+        router.navigate(to: .login)
+    }
+}

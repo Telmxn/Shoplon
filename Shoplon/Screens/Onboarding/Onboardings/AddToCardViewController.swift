@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AddToCardViewController: BaseViewController {
+class AddToCardViewController: UIViewController {
     private let mainStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
@@ -34,7 +34,7 @@ class AddToCardViewController: BaseViewController {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Get those shopping bags filled"
+        label.text = "onboarding2title".localized()
         label.font = UIFont.customFont(weight: .medium, size: 32)
         label.textColor = .black
         label.numberOfLines = 0
@@ -44,7 +44,7 @@ class AddToCardViewController: BaseViewController {
     
     private let subtitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Add any item you want to your cart, or save it on your wishlist, so you don’t miss it in your future purchases."
+        label.text = "onboarding2subtitle".localized()
         label.font = UIFont.customFont(weight: .regular, size: 14)
         label.textColor = .black40
         label.numberOfLines = 0
@@ -54,6 +54,7 @@ class AddToCardViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         setupUI()
     }
     

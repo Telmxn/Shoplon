@@ -7,9 +7,7 @@
 
 import UIKit
 
-final class OnboardingViewController: BaseViewController {
-    
-    private var viewModel: OnboardingViewModel
+final class OnboardingViewController: BaseViewController<OnboardingViewModel> {
     
     private var currentViewControllerIndex = 0
     
@@ -35,13 +33,12 @@ final class OnboardingViewController: BaseViewController {
         return pageController
     }()
     
-    
-    
     private lazy var skipButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Skip", for: .normal)
+        button.setTitle("skip".localized(), for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.customFont(weight: .medium, size: 14)
+        button.addTarget(self, action: #selector(didTapSkipButton), for: .touchUpInside)
         return button
     }()
     
@@ -71,15 +68,6 @@ final class OnboardingViewController: BaseViewController {
         view.distribution = .fillProportionally
         return view
     }()
-    
-    init(viewModel: OnboardingViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    @MainActor required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -121,7 +109,14 @@ final class OnboardingViewController: BaseViewController {
             currentViewControllerIndex += 1
             pageController.setViewControllers([viewControllers[currentViewControllerIndex]], direction: .forward, animated: true)
             updateProgressView()
+        } else {
+            viewModel.navigateToNotificationPermission()
         }
+    }
+    
+    @objc
+    private func didTapSkipButton() {
+        viewModel.navigateToNotificationPermission()
     }
     
     private func getViewController(by index: Int) -> UIViewController? {

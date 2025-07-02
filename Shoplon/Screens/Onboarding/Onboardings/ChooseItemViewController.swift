@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ChooseItemViewController: BaseViewController {
+class ChooseItemViewController: UIViewController {
     
     private let mainStackView: UIStackView = {
         let view = UIStackView()
@@ -36,7 +36,7 @@ class ChooseItemViewController: BaseViewController {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Find the item you’ve been looking for"
+        label.text = "onboarding1title".localized()
         label.font = UIFont.customFont(weight: .medium, size: 32)
         label.textColor = .black
         label.numberOfLines = 0
@@ -46,7 +46,7 @@ class ChooseItemViewController: BaseViewController {
     
     private let subtitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Here you’ll see rich varieties of goods, carefully classified for seamless browsing experience."
+        label.text = "onboarding1subtitle".localized()
         label.font = UIFont.customFont(weight: .regular, size: 14)
         label.textColor = .black40
         label.numberOfLines = 0
@@ -56,6 +56,7 @@ class ChooseItemViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         setupUI()
     }
     

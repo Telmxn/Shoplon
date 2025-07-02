@@ -1,0 +1,77 @@
+/* 
+  Localizable.strings
+  Shoplon
+
+  Created by Telman Yusifov on 22.05.25.
+  
+*/
+
+"next" = "Next";
+"skip" = "Skip";
+"notifications" = "Notifications";
+"onboarding1title" = "Find the item you’ve been looking for";
+"onboarding1subtitle" = "Here you’ll see rich varieties of goods, carefully classified for seamless browsing experience.";
+"onboarding2title" = "Get those shopping bags filled";
+"onboarding2subtitle" = "Add any item you want to your cart, or save it on your wishlist, so you don’t miss it in your future purchases.";
+"onboarding3title" = "Fast & secure payment";
+"onboarding3subtitle" = "There are many payment options available for your ease.";
+"onboarding4title" = "Package tracking";
+"onboarding4subtitle" = "In particular, Shoplon can pack your orders, and help you seamlessly manage your shipments.";
+"onboarding5title" = "Nearby stores";
+"onboarding5subtitle" = "Easily track nearby shops, browse through their items and get information about their prodcuts.";
+"notificationpermissiontitle" = "Notify latest offers & product availability";
+"notificationpermissionsubtitle" = "ba faal kardane notificatione shoplon, zoodtar az hame az akhbare ma bakhabar shavid.";
+"selectlanguagetitle" = "Select your preferred lanaguage";
+"selectlanguagesubtitle" = "You will use the same language throughout the app.";
+"welcomeback" = "Welcome back!";
+"logintext" = "Log in with your data that you intered during your registration.";
+"forgotpassword" = "Forgot password";
+"dontHaveAnAccount" = "Don’t have an account?";
+"doYouHaveAnAccount" = "Do you have an account?";
+"signUp" = "Sign up";
+"passwordRecovery" = "Password recovery";
+"passwordRecoveryText" = "Enter your E-mail address to recover your password";
+"login" = "Log in";
+"emailAddress" = "Email address";
+"password" = "Password";
+"error" = "Error";
+"close" = "Close";
+"verificationCode" = "Verification code";
+"sentVerificationCode" = "We have sent the code verification to";
+"changeEmailAddress" = "Change email address?";
+"resendCodeAfter" = "Resend code after";
+"resend" = "Resend";
+"confirm" = "Confirm";
+"setNewPassword" = "Set new password";
+"newPasswordText" = "Your new password must be diffrent from previosly used passwords.";
+"newPassword" = "New password";
+"newPasswordAgain" = "New password again";
+"changePassword" = "Change Password";
+"passwordSucessfullText" = "Your password has been changed successfully!";
+"letsGetStarted" = "Let’s get started!";
+"signUpText" = "Please enter your valid data in order to create an account.";
+"iAgreeTermsAndPolicy" = "I agree with the Terms of service & privacy policy.";
+"termsOfService" = "Terms of service";
+"continue" = "Continue";
+"lastUpdated" = "Last updated";
+"setupProfile" = "Setup profile";
+"fullName" = "Full name";
+"dateOfBirth" = "Date of birth";
+"phoneNumber" = "Phone Number";
+"uploadImage" = "Upload Image";
+"whoohooo" = "Whoohooo!";
+"emailVerifiedSuccessfully" = "Your Email has been verified succesfully.";
+"goToShopping" = "Go to shopping";
+"howFingerprint" = "How to set up Fingerprint";
+"howFaceID" = "How to set up Face ID";
+"fingerprintText" = "Place your finger on the sensor and lift it repeatedly. Move your finger slightly each time to capture all areas.";
+"faceIDText" = "Position your face in the camera frame, then slowly move your head in a circle to show all the angles of your face.";
+"setupFingerprint" = "Set up Fingerprint";
+"setupFaceid" = "Set up FaceID";
+"findSomething" = "Find something...";
+"categories" = "Categories";
+"allCategories" = "All categories";
+"popularProducts" = "Popular products";
+"off" = "Off";
+"mostPopular" = "Most popular";
+"bestSellers" = "Best sellers";
