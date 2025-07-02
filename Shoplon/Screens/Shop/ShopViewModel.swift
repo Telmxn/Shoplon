@@ -17,4 +17,43 @@ final class ShopViewModel: BaseViewModel {
     func navigateToProduct() {
         router.navigate(to: .product)
     }
+    
+    func fetchCategories(completion: @escaping (Result<[CategoryModel], Error>) -> ()) {
+        isLoading = true
+        DependencyContainer.shared.firebaseManager.fetchCategories { result in
+            self.isLoading = false
+            switch result {
+            case .success(let success):
+                completion(.success(success))
+            case .failure(let failure):
+                completion(.failure(failure))
+            }
+        }
+    }
+    
+    func fetchProducts(completion: @escaping (Result<[ProductModel], Error>) -> ()) {
+        isLoading = true
+        DependencyContainer.shared.firebaseManager.fetchProductItems { result in
+            self.isLoading = false
+            switch result {
+            case .success(let success):
+                completion(.success(success))
+            case .failure(let failure):
+                completion(.failure(failure))
+            }
+        }
+    }
+    
+    func fetchBrands(completion: @escaping (Result<[BrandModel], Error>) -> ()) {
+        isLoading = true
+        DependencyContainer.shared.firebaseManager.fetchBrands { result in
+            self.isLoading = false
+            switch result {
+            case .success(let success):
+                completion(.success(success))
+            case .failure(let failure):
+                completion(.failure(failure))
+            }
+        }
+    }
 }

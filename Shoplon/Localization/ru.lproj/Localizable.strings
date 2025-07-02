@@ -70,3 +70,8 @@
 "setupFaceid" = "Настроить Face ID";
 "findSomething" = "Найдите что-нибудь...";
 "categories" = "Категории";
+"allCategories" = "Все категории";
+"popularProducts" = "Популярные товары";
+"off" = "Скидка";
+"mostPopular" = "Самое популярное";
+"bestSellers" = "Хиты продаж";

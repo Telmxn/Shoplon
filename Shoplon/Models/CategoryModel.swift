@@ -8,7 +8,7 @@
 import Foundation
 
 struct CategoryModel {
-    var id: String
+    let id: String
     let name: String
     let imageUrl: String
     let iconUrl: String

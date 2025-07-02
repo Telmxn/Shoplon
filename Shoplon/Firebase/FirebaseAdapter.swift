@@ -10,6 +10,7 @@ import FirebaseAuth
 import FirebaseFunctions
 import FirebaseFirestore
 import FirebaseStorage
+import MapKit
 
 
 class FirebaseAdapter: FirebaseService {
@@ -161,7 +162,7 @@ class FirebaseAdapter: FirebaseService {
     func fetchCategories(completion: @escaping (Result<[CategoryModel], Error>) -> Void) {
         db.collection("categories").getDocuments { (querySnapshot, error) in
             if let error = error {
-                print("Error getting documents: \(error)")
+                completion(.failure(error))
             } else if let snapshot = querySnapshot {
                 let categories: [CategoryModel] = snapshot.documents.map { document in
                     let data = document.data()
@@ -171,4 +172,83 @@ class FirebaseAdapter: FirebaseService {
             }
         }
     }
+    
+    func fetchBrands(completion: @escaping (Result<[BrandModel], Error>) -> Void) {
+        db.collection("brands").getDocuments { querySnapshot, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let snapshot = querySnapshot {
+                let brands: [BrandModel] = snapshot.documents.map { document in
+                    let data = document.data()
+                    let location = data["location"] as! GeoPoint
+                    return .init(id: document.documentID, name: data["name"] as! String, logoUrl: data["logoUrl"] as! String, description: data["description"] as! String, location: .init(latitude: location.latitude, longitude: location.longitude))
+                }
+                completion(.success(brands))
+            }
+        }
+    }
+    
+    func fetchBrand(brandId: String, completion: @escaping (Result<BrandModel, Error>) -> Void) {
+        let docRef = db.collection("brands").document(brandId)
+        docRef.getDocument { documentSnapShot, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let snapshot = documentSnapShot {
+                let data = snapshot.data()
+                let location = data?["location"] as? GeoPoint
+                if let location = location {
+                    completion(.success(.init(id: snapshot.documentID, name: data?["name"] as! String, logoUrl: data?["logoUrl"] as! String, description: data?["description"] as! String, location: .init(latitude: location.latitude, longitude: location.longitude))))
+                }
+            }
+        }
+    }
+    
+    func fetchProductItems(completion: @escaping (Result<[ProductModel], Error>) -> Void) {
+        db.collection("products").getDocuments {
+            querySnapshot,
+            error in
+            if let error = error {
+                completion(.failure(error))
+                print("Error getting documents: \(error)")
+            } else if let snapshot = querySnapshot {
+                let products: [ProductModel] = snapshot.documents.compactMap { document in
+                    let data = document.data()
+                    
+                    guard let name = data["name"] as? String,
+                        let inStock = data["inStock"] as? Bool,
+                        let price = data["price"] as? Double,
+                        let rating = data["rating"] as? Double,
+                        let discount = data["discount"] as? Double,
+                        let brand = data["brand"] as? String,
+                        let brandId = data["brandId"] as? String,
+                        let categoryId = data["categoryId"] as? String,
+                        let description = data["description"] as? String,
+                        let imageUrls = data["imageUrls"] as? [String],
+                        let sizes = data["sizes"] as? [String]
+                    else {
+                        print("Error: Missing or incorrect data in document with ID: \(document.documentID)")
+                        return nil
+                    }
+                    
+                    guard let colorsArray = data["colors"] as? [[String: String]] else {
+                        print("Error: Colors data is missing or of incorrect format")
+                        return nil
+                    }
+                    
+                    let colors = colorsArray.compactMap { colorDict -> ProductModel.ColorModel? in
+                        guard let hex = colorDict["hex"],
+                            let name = colorDict["name"] else {
+                                print("Error: Missing color data")
+                                return nil
+                            }
+                        return ProductModel.ColorModel(hex: hex, name: name)
+                    }
+                    
+                    return .init(id: document.documentID, name: name, inStock: inStock, price: price, rating: rating, discount: discount, brand: brand, brandId: brandId, categoryId: categoryId, colors: colors, description: description, imageUrls: imageUrls, sizes: sizes)
+                }
+                completion(.success(products))
+            }
+        }
+    }
+
 }

@@ -21,4 +21,7 @@ protocol FirebaseService {
     func fetchUserData(uid: String, completion: @escaping (Result<[String: Any], Error>) -> Void)
     func fetchUserData(byEmail email: String, completion: @escaping (Result<[String: Any], Error>) -> Void)
     func fetchCategories(completion: @escaping (Result<[CategoryModel], Error>) -> Void)
+    func fetchProductItems(completion: @escaping (Result<[ProductModel], Error>) -> Void)
+    func fetchBrands(completion: @escaping (Result<[BrandModel], Error>) -> Void)
+    func fetchBrand(brandId: String, completion: @escaping (Result<BrandModel, Error>) -> Void)
 }
