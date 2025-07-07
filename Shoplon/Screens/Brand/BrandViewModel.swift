@@ -18,16 +18,33 @@ final class BrandViewModel: BaseViewModel {
     }
     
     func navigateToProduct() {
-        router.navigate(to: .product)
+        router.navigate(to: .product, mapInputData: nil)
     }
     
     func navigateToCart() {
-        router.navigate(to: .cart)
+        router.navigate(to: .cart, mapInputData: nil)
+    }
+    
+    func navigateToMap(inputData: BrandInMapInputData) {
+        router.navigate(to: .map, mapInputData: inputData)
     }
     
     func fetchBrand(completion: @escaping (Result<BrandModel, Error>) -> ()) {
         isLoading = true
         DependencyContainer.shared.firebaseManager.fetchBrand(brandId: inputData.brandId) { result in
+            self.isLoading = false
+            switch result {
+            case .success(let success):
+                completion(.success(success))
+            case .failure(let failure):
+                completion(.failure(failure))
+            }
+        }
+    }
+    
+    func fetchBrandProducts(completion: @escaping (Result<[ProductModel], Error>) -> ()) {
+        isLoading = true
+        DependencyContainer.shared.firebaseManager.fetchProductsForBrand(brandId: inputData.brandId) { result in
             self.isLoading = false
             switch result {
             case .success(let success):

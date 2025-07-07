@@ -64,6 +64,10 @@ class FirebaseManager {
         service.fetchCategories(completion: completion)
     }
     
+    func fetchProductsForCategory(categoryId: String, completion: @escaping (Result<[ProductModel], Error>) -> Void) {
+        service.fetchProductsForCategory(categoryId: categoryId, completion: completion)
+    }
+    
     func fetchProductItems(completion: @escaping (Result<[ProductModel], Error>) -> Void) {
         service.fetchProductItems(completion: completion)
     }
@@ -74,5 +78,9 @@ class FirebaseManager {
     
     func fetchBrand(brandId: String, completion: @escaping (Result<BrandModel, Error>) -> Void) {
         service.fetchBrand(brandId: brandId, completion: completion)
+    }
+    
+    func fetchProductsForBrand(brandId: String, completion: @escaping (Result<[ProductModel], Error>) -> Void) {
+        service.fetchProductsForBrand(brandId: brandId, completion: completion)
     }
 }

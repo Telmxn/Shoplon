@@ -18,15 +18,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
-        var vc = OnboardingBuilder().build()
-        let isLoggedIn = DependencyContainer.shared.userDefaultsManager.getBoolean(key: .userLoggedIn)
-        let seenOnboarding = DependencyContainer.shared.userDefaultsManager.getBoolean(key: .seenOnboarding)
-        if seenOnboarding {
-            vc = LoginBuilder().build()
-            if isLoggedIn {
-                vc = BaseTabBarController()
-            }
-        }
+//        var vc = OnboardingBuilder().build()
+//        let isLoggedIn = DependencyContainer.shared.userDefaultsManager.getBoolean(key: .userLoggedIn)
+//        let seenOnboarding = DependencyContainer.shared.userDefaultsManager.getBoolean(key: .seenOnboarding)
+//        if seenOnboarding {
+//            vc = LoginBuilder().build()
+//            if isLoggedIn {
+//                vc = BaseTabBarController()
+//            }
+//        }
+        var vc = BrandBuilder(inputData: .init(brandId: "nike")).build()
         window?.rootViewController = UINavigationController(rootViewController: vc)
         window?.makeKeyAndVisible()
     }

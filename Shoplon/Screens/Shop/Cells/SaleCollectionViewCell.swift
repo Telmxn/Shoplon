@@ -44,12 +44,7 @@ final class SaleCollectionViewCell: BaseCollectionViewCell {
         view.axis = .horizontal
         view.spacing = 4
         view.alignment = .center
-        view.distribution = .equalCentering
-        return view
-    }()
-    
-    private let spaceView: UIView = {
-        let view = UIView()
+        view.distribution = .equalSpacing
         return view
     }()
     
@@ -63,6 +58,7 @@ final class SaleCollectionViewCell: BaseCollectionViewCell {
         label.font = UIFont.customFont(weight: .bold, size: 14)
         label.textColor = .white
         label.text = ":"
+        label.textAlignment = .center
         return label
     }()
     
@@ -76,16 +72,12 @@ final class SaleCollectionViewCell: BaseCollectionViewCell {
         label.font = UIFont.customFont(weight: .bold, size: 14)
         label.textColor = .white
         label.text = ":"
+        label.textAlignment = .center
         return label
     }()
     
     private let secondsView: TimeContainerView = {
         let view = TimeContainerView(time: 10)
-        return view
-    }()
-    
-    private let lastSpaceView: UIView = {
-        let view = UIView()
         return view
     }()
     
@@ -102,7 +94,7 @@ final class SaleCollectionViewCell: BaseCollectionViewCell {
         
         contentView.addSubviews(imageView, overlayView, stackView)
         [titleLabel, timerStackView].forEach(stackView.addArrangedSubview)
-        [spaceView, hourView, colonLabel, minutesView, secondColonLabel, secondsView, lastSpaceView].forEach(timerStackView.addArrangedSubview)
+        [hourView, colonLabel, minutesView, secondColonLabel, secondsView].forEach(timerStackView.addArrangedSubview)
         
         imageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()

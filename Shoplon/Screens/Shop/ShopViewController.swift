@@ -271,9 +271,6 @@ extension ShopViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        if indexPath.section == 2 {
-//            print(indexPath.row)
-//        }
         print("Basildi", indexPath.section)
     }
 }

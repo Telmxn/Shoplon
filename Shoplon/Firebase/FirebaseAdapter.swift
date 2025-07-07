@@ -173,6 +173,18 @@ class FirebaseAdapter: FirebaseService {
         }
     }
     
+    func fetchProductsForCategory(categoryId: String, completion: @escaping (Result<[ProductModel], Error>) -> Void) {
+        db.collection("products").whereField("categoryId", isEqualTo: categoryId).getDocuments { querySnapshot, error in
+            if let error = error {
+                completion(.failure(error))
+                print("Error getting documents: \(error)")
+            } else if let snapshot = querySnapshot {
+                let products = self.productMapper(snapshot: snapshot)
+                completion(.success(products))
+            }
+        }
+    }
+    
     func fetchBrands(completion: @escaping (Result<[BrandModel], Error>) -> Void) {
         db.collection("brands").getDocuments { querySnapshot, error in
             if let error = error {
@@ -199,6 +211,18 @@ class FirebaseAdapter: FirebaseService {
                 if let location = location {
                     completion(.success(.init(id: snapshot.documentID, name: data?["name"] as! String, logoUrl: data?["logoUrl"] as! String, description: data?["description"] as! String, location: .init(latitude: location.latitude, longitude: location.longitude))))
                 }
+            }
+        }
+    }
+    
+    func fetchProductsForBrand(brandId: String, completion: @escaping (Result<[ProductModel], Error>) -> Void) {
+        db.collection("products").whereField("brandId", isEqualTo: brandId).getDocuments { querySnapshot, error in
+            if let error = error {
+                completion(.failure(error))
+                print("Error getting documents: \(error)")
+            } else if let snapshot = querySnapshot {
+                let products = self.productMapper(snapshot: snapshot)
+                completion(.success(products))
             }
         }
     }
@@ -251,4 +275,45 @@ class FirebaseAdapter: FirebaseService {
         }
     }
 
+}
+
+extension FirebaseAdapter {
+    private func productMapper(snapshot: QuerySnapshot) -> [ProductModel] {
+        let products: [ProductModel] = snapshot.documents.compactMap { document in
+            let data = document.data()
+            
+            guard let name = data["name"] as? String,
+                let inStock = data["inStock"] as? Bool,
+                let price = data["price"] as? Double,
+                let rating = data["rating"] as? Double,
+                let discount = data["discount"] as? Double,
+                let brand = data["brand"] as? String,
+                let brandId = data["brandId"] as? String,
+                let categoryId = data["categoryId"] as? String,
+                let description = data["description"] as? String,
+                let imageUrls = data["imageUrls"] as? [String],
+                let sizes = data["sizes"] as? [String]
+            else {
+                print("Error: Missing or incorrect data in document with ID: \(document.documentID)")
+                return nil
+            }
+            
+            guard let colorsArray = data["colors"] as? [[String: String]] else {
+                print("Error: Colors data is missing or of incorrect format")
+                return nil
+            }
+            
+            let colors = colorsArray.compactMap { colorDict -> ProductModel.ColorModel? in
+                guard let hex = colorDict["hex"],
+                    let name = colorDict["name"] else {
+                        print("Error: Missing color data")
+                        return nil
+                    }
+                return ProductModel.ColorModel(hex: hex, name: name)
+            }
+            
+            return .init(id: document.documentID, name: name, inStock: inStock, price: price, rating: rating, discount: discount, brand: brand, brandId: brandId, categoryId: categoryId, colors: colors, description: description, imageUrls: imageUrls, sizes: sizes)
+        }
+        return products
+    }
 }

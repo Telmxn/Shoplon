@@ -21,7 +21,16 @@ final class CategoryProductsViewModel: BaseViewModel {
         router.navigate(to: .product)
     }
     
-    func fetchCategoryProducts() {
-        
+    func fetchCategoryProducts(completion: @escaping (Result<[ProductModel], Error>) -> ()) {
+        isLoading = true
+        DependencyContainer.shared.firebaseManager.fetchProductsForCategory(categoryId: inputData.categoryId) { result in
+            self.isLoading = false
+            switch result {
+            case .success(let success):
+                completion(.success(success))
+            case .failure(let failure):
+                completion(.failure(failure))
+            }
+        }
     }
 }
