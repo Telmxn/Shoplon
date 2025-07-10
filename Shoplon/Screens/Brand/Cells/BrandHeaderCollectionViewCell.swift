@@ -8,6 +8,10 @@
 import UIKit
 import Kingfisher
 
+protocol BrandHeaderDelegate: AnyObject {
+    func didTapSearchField()
+}
+
 final class BrandHeaderCollectionViewCell: BaseCollectionViewCell {
     
     private let stackView: UIStackView = {
@@ -43,10 +47,13 @@ final class BrandHeaderCollectionViewCell: BaseCollectionViewCell {
         return label
     }()
     
-    private let searchTextField: SearchTextField = {
+    private lazy var searchTextField: SearchTextField = {
         let textField = SearchTextField()
+        textField.addTarget(self, action: #selector(didTapSearch), for: .editingDidBegin)
         return textField
     }()
+    
+    private weak var delegate: BrandHeaderDelegate?
     
     override func setupUI() {
         super.setupUI()
@@ -69,6 +76,10 @@ final class BrandHeaderCollectionViewCell: BaseCollectionViewCell {
             make.horizontalEdges.equalToSuperview()
         }
     }
+    
+    func subscribe(_ delegate: BrandHeaderDelegate) {
+        self.delegate = delegate
+    }
 }
 
 extension BrandHeaderCollectionViewCell {
@@ -81,5 +92,10 @@ extension BrandHeaderCollectionViewCell {
         imageView.kf.setImage(with: URL(string: item.imageUrl))
         descriptionLabel.text = item.description
         layoutIfNeeded()
+    }
+    
+    @objc
+    func didTapSearch() {
+        delegate?.didTapSearchField()
     }
 }

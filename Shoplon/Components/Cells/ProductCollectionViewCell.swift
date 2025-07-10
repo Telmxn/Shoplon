@@ -146,7 +146,7 @@ final class ProductCollectionViewCell: BaseCollectionViewCell {
 }
 
 extension ProductCollectionViewCell {
-    struct Item {
+    struct Item: Hashable {
         let name: String
         let price: Double
         let discount: Double

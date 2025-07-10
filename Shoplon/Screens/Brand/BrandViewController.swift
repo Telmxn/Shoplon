@@ -83,29 +83,28 @@ final class BrandViewController: BaseViewController<BrandViewModel> {
         super.viewDidLoad()
         hidesBottomBarWhenPushed = true
         
-        viewModel.fetchBrand { result in
+        viewModel.fetchBrand { [weak self] result in
             switch result {
             case .success(let brand):
-                self.brand = brand
-                self.title = brand.name
-                self.collectionView.reloadData()
+                self?.brand = brand
+                self?.title = brand.name
+                self?.collectionView.reloadData()
             case .failure(let failure):
-                self.showErrorAlertAction(message: failure.localizedDescription)
+                self?.showErrorAlertAction(message: failure.localizedDescription)
             }
         }
         
-        viewModel.fetchBrandProducts { result in
+        viewModel.fetchBrandProducts { [weak self] result in
             switch result {
             case .success(let products):
-                self.products = products.map({ product in
+                self?.products = products.map({ product in
                     return .init(name: product.name, price: product.price, discount: product.discount, brand: product.brand, imageUrl: product.imageUrls.first ?? "")
                 })
-                self.collectionView.reloadData()
+                self?.collectionView.reloadData()
             case .failure(let failure):
-                self.showErrorAlertAction(message: failure.localizedDescription)
+                self?.showErrorAlertAction(message: failure.localizedDescription)
             }
         }
-        
         setupUI()
     }
     
@@ -162,6 +161,7 @@ extension BrandViewController: UICollectionViewDelegate, UICollectionViewDataSou
         if indexPath.section == 0 {
             let cell: BrandHeaderCollectionViewCell = collectionView.dequeueCell(for: indexPath)
             cell.configure(item: .init(imageUrl: brand?.logoUrl ?? "", description: brand?.description ?? ""))
+            cell.subscribe(self)
             return cell
         } else if indexPath.section == 1 {
             let cell: ProductCollectionViewCell = collectionView.dequeueCell(for: indexPath)
@@ -183,5 +183,11 @@ extension BrandViewController: UICollectionViewDelegate, UICollectionViewDataSou
                 self.mapButtonView.layer.cornerRadius = 12
             }
         }
+    }
+}
+
+extension BrandViewController: BrandHeaderDelegate {
+    func didTapSearchField() {
+        viewModel.showSearch(inputData: .init(text: ""))
     }
 }

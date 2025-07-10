@@ -14,6 +14,10 @@ enum HeaderIcons {
     case close
 }
 
+protocol HeaderViewDelegate: AnyObject {
+    func didTapCloseButton()
+}
+
 class HeaderView: UIView {
     private let stackView: UIStackView = {
         let view = UIStackView()
@@ -54,11 +58,14 @@ class HeaderView: UIView {
         return view
     }()
     
-    private let closeImageView: UIImageView = {
+    private lazy var closeImageView: UIImageView = {
         let view = UIImageView()
         view.image = .close
         view.tintColor = .black
         view.isHidden = true
+        view.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapClose))
+        view.addGestureRecognizer(tapGesture)
         return view
     }()
     
@@ -79,6 +86,8 @@ class HeaderView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    private weak var delegate: HeaderViewDelegate?
     
     func setupUI() {
         addSubview(stackView)
@@ -120,5 +129,14 @@ class HeaderView: UIView {
                 closeImageView.isHidden = false
             }
         }
+    }
+    
+    func subscribe(_ delegate: HeaderViewDelegate) {
+        self.delegate = delegate
+    }
+    
+    @objc
+    func didTapClose() {
+        delegate?.didTapCloseButton()
     }
 }

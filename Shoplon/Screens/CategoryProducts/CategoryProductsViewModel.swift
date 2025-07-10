@@ -18,7 +18,15 @@ final class CategoryProductsViewModel: BaseViewModel {
     }
     
     func navigateToProduct() {
-        router.navigate(to: .product)
+        router.navigate(to: .product, searchInputData: nil)
+    }
+    
+    func showSearch(inputData: SearchInputData) {
+        router.navigate(to: .search, searchInputData: inputData)
+    }
+    
+    func getCategoryName() -> String {
+        return inputData.categoryName
     }
     
     func fetchCategoryProducts(completion: @escaping (Result<[ProductModel], Error>) -> ()) {

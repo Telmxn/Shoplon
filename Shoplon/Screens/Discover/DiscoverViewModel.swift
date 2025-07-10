@@ -14,8 +14,12 @@ final class DiscoverViewModel: BaseViewModel {
         self.router = router
     }
     
-    func navigateToCategory() {
-        router.navigate(to: .category)
+    func navigateToCategory(inputData: CategoryProductsInputData) {
+        router.navigate(to: .category, categoryInputData: inputData, searchInputData: nil)
+    }
+    
+    func showSearch(inputData: SearchInputData) {
+        router.navigate(to: .search, categoryInputData: nil, searchInputData: inputData)
     }
     
     func fetchCategories(completion: @escaping (Result<[CategoryModel], Error>) -> ()) {

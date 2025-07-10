@@ -17,5 +17,4 @@ extension UILabel {
         }
         self.attributedText = attribute
     }
-    
 }

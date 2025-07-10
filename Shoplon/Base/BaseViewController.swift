@@ -30,6 +30,7 @@ class BaseViewController<VM: BaseViewModel>: UIViewController {
         setCustomBackButton()
         bindViewModel()
         let closeKeyboarGesture = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
+        closeKeyboarGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(closeKeyboarGesture)
         view.backgroundColor = .white
     }

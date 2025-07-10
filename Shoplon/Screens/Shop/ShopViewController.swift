@@ -133,7 +133,7 @@ final class ShopViewController: BaseViewController<ShopViewModel> {
     private var categoriesList: [ShopCategoriesCollectionViewCell.Item] = []
     private var allProductsList: [ProductCollectionViewCell.Item] = []
     private var popularProductsList: [HorizontalProductCollectionViewCell.Item] = []
-    private var brandsLogoList: [String] = []
+    private var brandList: [BrandCompactModel] = []
     
     
     override func viewDidLoad() {
@@ -146,9 +146,9 @@ final class ShopViewController: BaseViewController<ShopViewModel> {
             switch result {
             case .success(let categories):
                 self.categoriesList = categories.map({ category in
-                    return .init(title: category.name, iconUrl: category.iconUrl, isActive: false)
+                    return .init(id: category.id, title: category.name, iconUrl: category.iconUrl, isActive: false)
                 })
-                self.categoriesList.insert(.init(title: "allCategories".localized(), iconUrl: nil, isActive: true), at: 0)
+                self.categoriesList.insert(.init(id: "all", title: "allCategories".localized(), iconUrl: nil, isActive: true), at: 0)
                 self.collectionView.reloadData()
             case .failure(let error):
                 self.showErrorAlertAction(message: error.localizedDescription)
@@ -176,8 +176,8 @@ final class ShopViewController: BaseViewController<ShopViewModel> {
         viewModel.fetchBrands { result in
             switch result {
             case .success(let brands):
-                self.brandsLogoList = brands.map({ brand in
-                    return brand.logoUrl
+                self.brandList = brands.map({ brand in
+                    return .init(id: brand.id, logoUrl: brand.logoUrl)
                 })
                 self.collectionView.reloadData()
             case .failure(let error):
@@ -209,7 +209,7 @@ extension ShopViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == 0 { return categoriesList.count }
         if section == 1 { return allProductsList.count > 4 ? 4 : allProductsList.count }
-        if section == 2 { return brandsLogoList.count }
+        if section == 2 { return brandList.count }
         if section == 3 { return 1 }
         if section == 4 { return allProductsList.count > 4 ? 4 : allProductsList.count }
         if section == 5 { return popularProductsList.count }
@@ -227,7 +227,7 @@ extension ShopViewController: UICollectionViewDelegate, UICollectionViewDataSour
             return cell
         } else if indexPath.section == 2 {
             let cell: BrandsCollectionViewCell = collectionView.dequeueCell(for: indexPath)
-            cell.configure(logoUrl: brandsLogoList[indexPath.row])
+            cell.configure(logoUrl: brandList[indexPath.row].logoUrl)
             return cell
         } else if indexPath.section == 3 {
             let cell: SaleCollectionViewCell = collectionView.dequeueCell(for: indexPath)
@@ -271,6 +271,12 @@ extension ShopViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Basildi", indexPath.section)
+        if indexPath.section == 0 {
+            if indexPath.row != 0 {
+                viewModel.navigateToCategory(inputData: .init(categoryId: categoriesList[indexPath.row].id, categoryName: categoriesList[indexPath.row].title))
+            }
+        } else if indexPath.section == 2 {
+            viewModel.navigateToBrand(inputData: .init(brandId: brandList[indexPath.row].id))
+        }
     }
 }

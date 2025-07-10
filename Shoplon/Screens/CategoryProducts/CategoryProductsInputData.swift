@@ -9,4 +9,5 @@ import Foundation
 
 struct CategoryProductsInputData {
     let categoryId: String
+    let categoryName: String
 }

@@ -55,6 +55,7 @@ class DiscoverCategoryTableViewCell: BaseTableViewCell {
 
 extension DiscoverCategoryTableViewCell {
     struct Item {
+        let id: String
         let imageUrl: String
         let title: String
     }

@@ -9,13 +9,14 @@ import UIKit
 
 final class DiscoverViewController: BaseViewController<DiscoverViewModel> {
     
-    private let headerView: HeaderView = {
+    private lazy var headerView: HeaderView = {
         let view = HeaderView(icons: [.notification, .message])
         return view
     }()
     
-    private let searchTextField: SearchTextField = {
+    private lazy var searchTextField: SearchTextField = {
         let textField = SearchTextField()
+        textField.addTarget(self, action: #selector(didTapSearch), for: .editingDidBegin)
         return textField
     }()
     
@@ -41,7 +42,7 @@ final class DiscoverViewController: BaseViewController<DiscoverViewModel> {
             switch result {
             case .success(let categories):
                 self.categoriesList = categories.map { category in
-                    return .init(imageUrl: category.imageUrl, title: category.name)
+                    return .init(id: category.id, imageUrl: category.imageUrl, title: category.name)
                 }
                 self.tableView.reloadData()
             case .failure(let error):
@@ -72,6 +73,11 @@ final class DiscoverViewController: BaseViewController<DiscoverViewModel> {
     
     override func bindViewModel() {
         super.bindViewModel()
+    }
+    
+    @objc
+    private func didTapSearch() {
+        viewModel.showSearch(inputData: .init(text: searchTextField.text ?? ""))
     }
 }
 
@@ -107,5 +113,9 @@ extension DiscoverViewController: UITableViewDataSource, UITableViewDelegate {
             make.verticalEdges.equalToSuperview().inset(16)
         }
         return view
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.navigateToCategory(inputData: .init(categoryId: categoriesList[indexPath.row].id, categoryName: categoriesList[indexPath.row].title))
     }
 }

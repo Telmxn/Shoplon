@@ -15,3 +15,8 @@ struct BrandModel {
     let description: String
     let location: CLLocationCoordinate2D
 }
+
+struct BrandCompactModel {
+    let id: String
+    let logoUrl: String
+}

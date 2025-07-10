@@ -70,6 +70,7 @@ final class ShopCategoriesCollectionViewCell: BaseCollectionViewCell {
 
 extension ShopCategoriesCollectionViewCell {
     struct Item {
+        let id: String
         let title: String
         let iconUrl: String?
         let isActive: Bool

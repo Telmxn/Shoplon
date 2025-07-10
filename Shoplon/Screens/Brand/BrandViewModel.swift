@@ -18,15 +18,19 @@ final class BrandViewModel: BaseViewModel {
     }
     
     func navigateToProduct() {
-        router.navigate(to: .product, mapInputData: nil)
+        router.navigate(to: .product, mapInputData: nil, searchInputData: nil)
     }
     
     func navigateToCart() {
-        router.navigate(to: .cart, mapInputData: nil)
+        router.navigate(to: .cart, mapInputData: nil, searchInputData: nil)
     }
     
     func navigateToMap(inputData: BrandInMapInputData) {
-        router.navigate(to: .map, mapInputData: inputData)
+        router.navigate(to: .map, mapInputData: inputData, searchInputData: nil)
+    }
+    
+    func showSearch(inputData: SearchInputData) {
+        router.navigate(to: .search, mapInputData: nil, searchInputData: inputData)
     }
     
     func fetchBrand(completion: @escaping (Result<BrandModel, Error>) -> ()) {

@@ -15,7 +15,15 @@ final class ShopViewModel: BaseViewModel {
     }
     
     func navigateToProduct() {
-        router.navigate(to: .product)
+        router.navigate(to: .product, categoryInputData: nil, brandInputData: nil)
+    }
+    
+    func navigateToCategory(inputData: CategoryProductsInputData) {
+        router.navigate(to: .category, categoryInputData: inputData, brandInputData: nil)
+    }
+    
+    func navigateToBrand(inputData: BrandInputData) {
+        router.navigate(to: .brand, categoryInputData: nil, brandInputData: inputData)
     }
     
     func fetchCategories(completion: @escaping (Result<[CategoryModel], Error>) -> ()) {
