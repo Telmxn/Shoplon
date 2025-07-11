@@ -266,8 +266,12 @@ final class SignUpViewController: BaseViewController<SignUpViewModel>, Keyboarda
                     }
                 }
             } else {
-                self.emailTF.setErrorState()
-                self.passwordTF.setErrorState()
+                if !password.isValidPassword() {
+                    self.passwordTF.setErrorState()
+                }
+                if !email.isValidEmail() {
+                    self.emailTF.setErrorState()
+                }
             }
         } else {
             emailTF.setErrorState()

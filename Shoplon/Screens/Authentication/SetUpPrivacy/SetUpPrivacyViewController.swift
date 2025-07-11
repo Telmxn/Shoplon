@@ -57,6 +57,7 @@ final class SetUpPrivacyViewController: BaseViewController<SetUpPrivacyViewModel
         let button = BaseButton(text: "skip".localized())
         button.setTitleColor(.black, for: .normal)
         button.backgroundColor = .clear
+        button.addTarget(self, action: #selector(didTapSkipButton), for: .touchUpInside)
         return button
     }()
     
@@ -113,11 +114,19 @@ final class SetUpPrivacyViewController: BaseViewController<SetUpPrivacyViewModel
                         self?.showErrorAlertAction(message: "Failed to Authenticate")
                         return
                     }
+                    DependencyContainer.shared.userDefaultsManager.save(key: .haveFaceOrTouchID, value: true)
                     self?.viewModel.navigateToHome()
                 }
             }
         } else {
+            DependencyContainer.shared.userDefaultsManager.save(key: .haveFaceOrTouchID, value: false)
             showErrorAlertAction(message: "You cannot use this feature")
         }
+    }
+    
+    @objc
+    private func didTapSkipButton() {
+        DependencyContainer.shared.userDefaultsManager.save(key: .haveFaceOrTouchID, value: false)
+        self.viewModel.navigateToHome()
     }
 }

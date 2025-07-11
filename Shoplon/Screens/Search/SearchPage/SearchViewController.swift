@@ -30,14 +30,12 @@ final class SearchViewController: BaseViewController<SearchViewModel>, Keyboarda
         return view
     }()
     
-    private lazy var searchTextField: SearchTextField = {
-        let textField = SearchTextField()
-        textField.layer.borderWidth = 1.5
-        textField.layer.borderColor = UIColor.purple100.cgColor
-        textField.addTarget(self, action: #selector(didStartSearching), for: .editingChanged)
-        textField.addTarget(self, action: #selector(startedWriting), for: .editingDidBegin)
-        textField.addTarget(self, action: #selector(stoppedWriting), for: .editingDidEnd)
-        return textField
+    private lazy var searchView: SearchView = {
+        let view = SearchView()
+        view.searchTF.addTarget(self, action: #selector(didStartSearching), for: .editingChanged)
+        view.searchTF.addTarget(self, action: #selector(startedWriting), for: .editingDidBegin)
+        view.searchTF.addTarget(self, action: #selector(stoppedWriting), for: .editingDidEnd)
+        return view
     }()
 
     private lazy var collectionView: UICollectionView = {
@@ -119,7 +117,7 @@ final class SearchViewController: BaseViewController<SearchViewModel>, Keyboarda
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchTextField.becomeFirstResponder()
+        searchView.searchTF.becomeFirstResponder()
         startKeyboardObserve()
         
         setRecentSearches()
@@ -212,21 +210,21 @@ final class SearchViewController: BaseViewController<SearchViewModel>, Keyboarda
     }
     
     private func setupUI() {
-        view.addSubviews(headerView, searchTextField, collectionView, searchButton)
+        view.addSubviews(headerView, searchView, collectionView, searchButton)
         
         headerView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.horizontalEdges.equalToSuperview().inset(32)
         }
         
-        searchTextField.snp.makeConstraints { make in
+        searchView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview().inset(32)
             make.top.equalTo(headerView.snp.bottom).offset(40)
         }
         
         collectionView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview()
-            make.top.equalTo(searchTextField.snp.bottom).offset(24)
+            make.top.equalTo(searchView.snp.bottom).offset(24)
             make.bottom.equalToSuperview()
         }
         
@@ -238,7 +236,7 @@ final class SearchViewController: BaseViewController<SearchViewModel>, Keyboarda
     
     @objc
     private func didStartSearching() {
-        let searchText = searchTextField.text ?? ""
+        let searchText = searchView.searchTF.text ?? ""
         let filteredResult = productList.filter { itemType in
             switch itemType {
             case .title(let item):
@@ -269,7 +267,7 @@ final class SearchViewController: BaseViewController<SearchViewModel>, Keyboarda
     
     @objc
     private func didTapSearchButton() {
-        if let searchText = searchTextField.text, searchText.trimmingCharacters(in: .whitespacesAndNewlines) != "" {
+        if let searchText = searchView.searchTF.text, searchText.trimmingCharacters(in: .whitespacesAndNewlines) != "" {
             setSearchesList(text: searchText)
             
             setSearchResult(text: searchText)
@@ -326,14 +324,16 @@ final class SearchViewController: BaseViewController<SearchViewModel>, Keyboarda
     @objc
     private func startedWriting() {
         UIView.animate(withDuration: 0.3) {
-            self.searchTextField.layer.borderColor = UIColor.purple100.cgColor
+            self.searchView.searchTF.layer.borderColor = UIColor.purple100.cgColor
+            self.searchButton.alpha = 1
         }
     }
     
     @objc
     private func stoppedWriting() {
         UIView.animate(withDuration: 0.3) {
-            self.searchTextField.layer.borderColor = UIColor.gray20.cgColor
+            self.searchView.searchTF.layer.borderColor = UIColor.gray20.cgColor
+            self.searchButton.alpha = 0
         }
     }
 }

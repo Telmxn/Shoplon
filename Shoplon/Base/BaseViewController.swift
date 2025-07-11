@@ -54,6 +54,15 @@ class BaseViewController<VM: BaseViewModel>: UIViewController {
                 self?.handleLoading(isLoading)
             }
             .store(in: &cancellables)
+        
+        viewModel.$error
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                if let error = error {
+                    self?.showErrorAlertAction(message: error.localizedDescription)
+                }
+            }
+            .store(in: &cancellables)
     }
     
     private func handleLoading(_ isLoading: Bool) {

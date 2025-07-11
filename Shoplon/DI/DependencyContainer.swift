@@ -21,4 +21,8 @@ class DependencyContainer {
     lazy var userDefaultsManager: UserDefaultsManager = {
         return UserDefaultsManager()
     }()
+    
+    lazy var keychainManager: KeychainManager = {
+        return KeychainManager()
+    }()
 }

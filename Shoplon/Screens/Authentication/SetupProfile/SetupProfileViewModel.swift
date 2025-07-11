@@ -18,6 +18,7 @@ final class SetupProfileViewModel: BaseViewModel {
     }
     
     func navigateToVerificationCode() {
+        sendOTPMail(to: Auth.auth().currentUser?.email ?? "")
         router.navigate(to: .verificationCode, email: Auth.auth().currentUser?.email ?? "")
     }
     
@@ -38,7 +39,6 @@ final class SetupProfileViewModel: BaseViewModel {
                     if let error = error {
                         print("Error while saving user data:",error)
                     }
-                    self.sendOTPMail(to: Auth.auth().currentUser?.email ?? "")
                     self.navigateToVerificationCode()
                 }
             case .failure(let failure):

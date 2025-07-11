@@ -10,4 +10,5 @@ import Combine
 
 class BaseViewModel {
     @Published var isLoading: Bool = false
+    @Published var error: Error?
 }

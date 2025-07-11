@@ -17,7 +17,7 @@ final class SetUpPrivacyRouter {
     func navigate(to route: SetUpPrivacyRoute) {
         switch route {
         case .home:
-            let vc = SignUpBuilder().build()
+            let vc = BaseTabBarController()
             view?.navigationController?.setViewControllers([vc], animated: true)
         }
     }

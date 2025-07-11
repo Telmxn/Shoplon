@@ -83,28 +83,9 @@ final class BrandViewController: BaseViewController<BrandViewModel> {
         super.viewDidLoad()
         hidesBottomBarWhenPushed = true
         
-        viewModel.fetchBrand { [weak self] result in
-            switch result {
-            case .success(let brand):
-                self?.brand = brand
-                self?.title = brand.name
-                self?.collectionView.reloadData()
-            case .failure(let failure):
-                self?.showErrorAlertAction(message: failure.localizedDescription)
-            }
-        }
+        viewModel.fetchBrand()
+        viewModel.fetchBrandProducts()
         
-        viewModel.fetchBrandProducts { [weak self] result in
-            switch result {
-            case .success(let products):
-                self?.products = products.map({ product in
-                    return .init(name: product.name, price: product.price, discount: product.discount, brand: product.brand, imageUrl: product.imageUrls.first ?? "")
-                })
-                self?.collectionView.reloadData()
-            case .failure(let failure):
-                self?.showErrorAlertAction(message: failure.localizedDescription)
-            }
-        }
         setupUI()
     }
     
@@ -136,6 +117,22 @@ final class BrandViewController: BaseViewController<BrandViewModel> {
     
     override func bindViewModel() {
         super.bindViewModel()
+
+        viewModel.$products
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] products in
+                self?.products = products
+                self?.collectionView.reloadData()
+            }
+            .store(in: &cancellables)
+        
+        viewModel.$brand
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] brand in
+                self?.brand = brand
+                self?.collectionView.reloadData()
+            }
+            .store(in: &cancellables)
     }
     
     @objc

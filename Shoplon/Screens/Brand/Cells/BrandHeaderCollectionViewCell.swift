@@ -47,10 +47,10 @@ final class BrandHeaderCollectionViewCell: BaseCollectionViewCell {
         return label
     }()
     
-    private lazy var searchTextField: SearchTextField = {
-        let textField = SearchTextField()
-        textField.addTarget(self, action: #selector(didTapSearch), for: .editingDidBegin)
-        return textField
+    private lazy var searchView: SearchView = {
+        let view = SearchView()
+        view.searchTF.addTarget(self, action: #selector(didTapSearch), for: .editingDidBegin)
+        return view
     }()
     
     private weak var delegate: BrandHeaderDelegate?
@@ -59,7 +59,7 @@ final class BrandHeaderCollectionViewCell: BaseCollectionViewCell {
         super.setupUI()
         
         contentView.addSubviews(stackView)
-        [brandStackView, searchTextField].forEach(stackView.addArrangedSubview)
+        [brandStackView, searchView].forEach(stackView.addArrangedSubview)
         [imageView, descriptionLabel].forEach(brandStackView.addArrangedSubview)
         
         stackView.snp.makeConstraints { make in
@@ -72,7 +72,7 @@ final class BrandHeaderCollectionViewCell: BaseCollectionViewCell {
             make.height.equalTo(55)
         }
         
-        searchTextField.snp.makeConstraints { make in
+        searchView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview()
         }
     }

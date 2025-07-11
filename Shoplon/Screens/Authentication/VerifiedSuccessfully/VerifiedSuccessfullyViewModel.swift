@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import LocalAuthentication
 
 final class VerifiedSuccessfullyViewModel: BaseViewModel {
     private let router: VerifiedSuccessfullyRouter
@@ -15,6 +16,15 @@ final class VerifiedSuccessfullyViewModel: BaseViewModel {
     }
     
     func navigateToSetPrivacy() {
-        router.navigate(to: .setupPrivacy)
+        let context = LAContext()
+        switch context.biometricType {
+        case .none:
+            router.navigate(to: .home)
+        case .touchID:
+            router.navigate(to: .setupPrivacy)
+        case .faceID:
+            router.navigate(to: .setupPrivacy)
+        }
+        
     }
 }

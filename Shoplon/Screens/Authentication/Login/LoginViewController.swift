@@ -116,9 +116,16 @@ class LoginViewController: BaseViewController<LoginViewModel>, Keyboardable {
     override func viewDidLoad() {
         super.viewDidLoad()
         keyboardableImageView = imageView
+        viewModel.navigateToHomeDirect()
         startKeyboardObserve()
         setupUI()
         DependencyContainer.shared.userDefaultsManager.save(key: .seenOnboarding, value: true)
+        
+        let email = DependencyContainer.shared.keychainManager.getString(key: .email)
+        if email != "" {
+            emailTF.text = email
+        }
+        
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil) { [weak self] notification in
             guard let self = self else { return }
             self.stackView.snp.remakeConstraints { make in

@@ -10,6 +10,7 @@ import Foundation
 enum UserDefaultKeys: String {
     case seenOnboarding
     case userLoggedIn
+    case haveFaceOrTouchID
     case recentSearches = "RECENT_SEARCHES"
 }
 

@@ -56,6 +56,7 @@ final class VerificationCodeViewModel: BaseViewModel {
             self.isLoading = false
             switch result {
             case .success(let success):
+                DependencyContainer.shared.keychainManager.save(key: .email, value: self.inputData.email)
                 completion(.success(success))
             case .failure(let failure):
                 completion(.failure(failure))

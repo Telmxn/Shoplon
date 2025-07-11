@@ -86,9 +86,10 @@ class NotificationPermissionViewController: BaseViewController<NotificationPermi
         return label
     }()
     
-    private let toggleSwitch: UISwitch = {
+    private lazy var toggleSwitch: UISwitch = {
         let toggle = UISwitch()
         toggle.onTintColor = .purple100
+        toggle.addTarget(self, action: #selector(switchToggled), for: .valueChanged)
         return toggle
     }()
     
@@ -138,5 +139,19 @@ class NotificationPermissionViewController: BaseViewController<NotificationPermi
     @objc
     private func didTapNextButton() {
         viewModel.navigateToLanguageSelector()
+    }
+    
+    @objc
+    private func switchToggled() {
+        if toggleSwitch.isOn {
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (success, error) in
+                if let error = error {
+                    print("Request Authorization Failed (\(error), \(error.localizedDescription))")
+                }
+                else{
+                    print("Request granted.")
+                }
+            }
+        }
     }
 }

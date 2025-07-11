@@ -85,7 +85,7 @@ class SelectLanguageViewController: BaseViewController<SelectLanguageViewModel> 
         }
         
         languagesStackView.snp.makeConstraints { make in
-            make.top.equalTo(textStackView.snp.bottom).offset(75)
+            make.centerY.equalToSuperview()
             make.horizontalEdges.equalToSuperview().inset(32)
         }
         

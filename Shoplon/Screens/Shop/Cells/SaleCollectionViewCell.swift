@@ -26,6 +26,7 @@ final class SaleCollectionViewCell: BaseCollectionViewCell {
         let view = UIStackView()
         view.axis = .vertical
         view.distribution = .equalSpacing
+        view.alignment = .center
         return view
     }()
     
@@ -94,7 +95,13 @@ final class SaleCollectionViewCell: BaseCollectionViewCell {
         
         contentView.addSubviews(imageView, overlayView, stackView)
         [titleLabel, timerStackView].forEach(stackView.addArrangedSubview)
-        [hourView, colonLabel, minutesView, secondColonLabel, secondsView].forEach(timerStackView.addArrangedSubview)
+        [
+            hourView,
+            colonLabel,
+            minutesView,
+            secondColonLabel,
+            secondsView
+        ].forEach(timerStackView.addArrangedSubview)
         
         imageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
