@@ -14,10 +14,10 @@ final class DiscoverViewController: BaseViewController<DiscoverViewModel> {
         return view
     }()
     
-    private lazy var searchTextField: SearchTextField = {
-        let textField = SearchTextField()
-        textField.addTarget(self, action: #selector(didTapSearch), for: .editingDidBegin)
-        return textField
+    private lazy var searchView: SearchView = {
+        let view = SearchView()
+        view.searchTF.addTarget(self, action: #selector(didTapSearch), for: .editingDidBegin)
+        return view
     }()
     
     private lazy var tableView: UITableView = {
@@ -52,20 +52,20 @@ final class DiscoverViewController: BaseViewController<DiscoverViewModel> {
     }
     
     private func setupUI() {
-        view.addSubviews(headerView, searchTextField, tableView)
+        view.addSubviews(headerView, searchView, tableView)
         
         headerView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.horizontalEdges.equalToSuperview().inset(32)
         }
         
-        searchTextField.snp.makeConstraints { make in
+        searchView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview().inset(32)
             make.top.equalTo(headerView.snp.bottom).offset(40)
         }
         
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(searchTextField.snp.bottom)
+            make.top.equalTo(searchView.snp.bottom)
             make.horizontalEdges.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide)
         }
@@ -77,7 +77,7 @@ final class DiscoverViewController: BaseViewController<DiscoverViewModel> {
     
     @objc
     private func didTapSearch() {
-        viewModel.showSearch(inputData: .init(text: searchTextField.text ?? ""))
+        viewModel.showSearch(inputData: .init(text: searchView.searchTF.text ?? ""))
     }
 }
 

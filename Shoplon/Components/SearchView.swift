@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol SearchViewDelegate {
+    func didTapFilter()
+}
+
 class SearchView: UIView {
     
     let searchTF: SearchTextField = {
@@ -36,6 +40,8 @@ class SearchView: UIView {
         view.addGestureRecognizer(tapGesture)
         return view
     }()
+    
+    private var delegate: SearchViewDelegate?
     
     init() {
         super.init(frame: .zero)
@@ -71,8 +77,12 @@ class SearchView: UIView {
         }
     }
     
+    func subscribe(_ delegate: SearchViewDelegate) {
+        self.delegate = delegate
+    }
+    
     @objc
     func didTapFilterButton() {
-        print("Tapped")
+        delegate?.didTapFilter()
     }
 }

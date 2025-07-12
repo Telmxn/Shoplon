@@ -16,7 +16,7 @@ final class SearchViewController: BaseViewController<SearchViewModel>, Keyboarda
     
     var keyboardableImageView: UIImageView?
     
-    private var diffableDataSource: DiffableDataSource? = nil
+    private var diffableDataSource: SearchDiffableDataSource? = nil
     
     private var recentSearchesList: [SearchItemType] = []
     
@@ -35,6 +35,7 @@ final class SearchViewController: BaseViewController<SearchViewModel>, Keyboarda
         view.searchTF.addTarget(self, action: #selector(didStartSearching), for: .editingChanged)
         view.searchTF.addTarget(self, action: #selector(startedWriting), for: .editingDidBegin)
         view.searchTF.addTarget(self, action: #selector(stoppedWriting), for: .editingDidEnd)
+        view.subscribe(self)
         return view
     }()
 
@@ -50,14 +51,14 @@ final class SearchViewController: BaseViewController<SearchViewModel>, Keyboarda
         return view
     }()
     
-    private var searchSnapshot: DiffableSnapshot = {
-        var snapshot = DiffableSnapshot()
+    private var searchSnapshot: SearchDiffableSnapshot = {
+        var snapshot = SearchDiffableSnapshot()
         snapshot.appendSections([.search])
         return snapshot
     }()
     
-    private var searchResultSnapshot: DiffableSnapshot = {
-        var snapshot = DiffableSnapshot()
+    private var searchResultSnapshot: SearchDiffableSnapshot = {
+        var snapshot = SearchDiffableSnapshot()
         snapshot.appendSections([.result])
         return snapshot
     }()
@@ -71,7 +72,7 @@ final class SearchViewController: BaseViewController<SearchViewModel>, Keyboarda
                 let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(56))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
-                section.contentInsets = .init(top: 0, leading: 32, bottom: 16, trailing: 32)
+                section.contentInsets = .init(top: 0, leading: 32, bottom: 70, trailing: 32)
                 section.interGroupSpacing = 8
                 
                 if self?.diffableDataSource?.snapshot().sectionIdentifiers[sectionIndex].rawValue == SearchSection.recent.rawValue {
@@ -93,7 +94,7 @@ final class SearchViewController: BaseViewController<SearchViewModel>, Keyboarda
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 group.interItemSpacing = .fixed(16)
                 let section = NSCollectionLayoutSection(group: group)
-                section.contentInsets = .init(top: 16, leading: 32, bottom: 16, trailing: 32)
+                section.contentInsets = .init(top: 16, leading: 32, bottom: 70, trailing: 32)
                 section.interGroupSpacing = 16
                 
                 let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
@@ -151,7 +152,7 @@ final class SearchViewController: BaseViewController<SearchViewModel>, Keyboarda
     }
     
     private func makeDiffableDataSource() {
-        diffableDataSource = DiffableDataSource(collectionView: collectionView) { collectionView, indexPath, itemIdentifier in
+        diffableDataSource = SearchDiffableDataSource(collectionView: collectionView) { collectionView, indexPath, itemIdentifier in
             switch itemIdentifier {
             case .title(let item):
                 let cell: SearchItemCollectionViewCell = collectionView.dequeueCell(for: indexPath)
@@ -197,7 +198,7 @@ final class SearchViewController: BaseViewController<SearchViewModel>, Keyboarda
     }
     
     private func applySnapshot() {
-        var snapshot = DiffableSnapshot()
+        var snapshot = SearchDiffableSnapshot()
         if recentSearchesList.count > 0 {
             snapshot.appendSections([.recent])
             snapshot.appendItems(recentSearchesList, toSection: .recent)
@@ -344,8 +345,8 @@ extension SearchViewController: HeaderViewDelegate {
     }
 }
 
-typealias DiffableDataSource = UICollectionViewDiffableDataSource<SearchSection, SearchItemType>
-typealias DiffableSnapshot = NSDiffableDataSourceSnapshot<SearchSection, SearchItemType>
+typealias SearchDiffableDataSource = UICollectionViewDiffableDataSource<SearchSection, SearchItemType>
+typealias SearchDiffableSnapshot = NSDiffableDataSourceSnapshot<SearchSection, SearchItemType>
 
 enum SearchSection: String {
     case recent = "recentSearches"
@@ -358,7 +359,7 @@ enum SearchItemType: Hashable {
     case product(ProductCollectionViewCell.Item)
 }
 
-extension SearchViewController: UICollectionViewDelegate, SearchItemDelegate {
+extension SearchViewController: UICollectionViewDelegate, SearchItemDelegate, SearchViewDelegate {
     func didDeleteItem() {
         setRecentSearches()
         applySnapshot()
@@ -377,5 +378,9 @@ extension SearchViewController: UICollectionViewDelegate, SearchItemDelegate {
                 }
             }
         }
+    }
+    
+    func didTapFilter() {
+        viewModel.showFilter(inputData: .init(isAvailableInStock: false, colors: [], size: [], brand: [], minPrice: 0, maxPrice: 300, sortBy: .az))
     }
 }

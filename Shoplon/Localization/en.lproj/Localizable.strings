@@ -81,3 +81,14 @@
 "recentSearches" = "Recent Searches";
 "searchResult" = "Search result";
 "items" = "items";
+"highestRated" = "Highest Rated";
+"new" = "New";
+"priceHighToLow" = "Price [High to Low]";
+"priceLowToHigh" = "Price [Low to High]";
+"filter" = "Filter";
+"sort" = "Sort";
+"color" = "Color";
+"size" = "Size";
+"brand" = "Brand";
+"price" = "Price";
+"availableInStock" = "Available in stock";

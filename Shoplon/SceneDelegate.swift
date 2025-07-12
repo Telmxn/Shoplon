@@ -21,8 +21,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         var vc = OnboardingBuilder().build()
         let seenOnboarding = DependencyContainer.shared.userDefaultsManager.getBoolean(key: .seenOnboarding)
         if seenOnboarding {
-            vc = LoginBuilder().build()
-//            vc = BaseTabBarController()
+//            vc = LoginBuilder().build()
+            vc = BaseTabBarController()
         }
         window?.rootViewController = UINavigationController(rootViewController: vc)
         window?.makeKeyAndVisible()

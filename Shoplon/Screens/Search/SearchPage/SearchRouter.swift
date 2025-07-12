@@ -9,18 +9,21 @@ import UIKit
 
 enum SearchRoute {
     case recentSearches
-    case result
+    case filter
 }
 
 final class SearchRouter {
     weak var view: UIViewController?
     
-    func navigate(to route: SearchRoute) {
+    func navigate(to route: SearchRoute, filterInputData: FilterInputData?) {
         switch route {
-        case .result:
-            print("Product")
         case .recentSearches:
             print("Recent Searches")
+        case .filter:
+            if let inputData = filterInputData {
+                let vc = FilterBuilder(inputData: inputData).build()
+                self.view?.present(vc, animated: true)
+            }
         }
     }
 }

@@ -22,7 +22,7 @@ struct ProductModel {
     let imageUrls: [String]
     let sizes: [String]
     
-    struct ColorModel {
+    struct ColorModel: Hashable {
         let hex: String
         let name: String
     }

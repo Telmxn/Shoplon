@@ -17,12 +17,12 @@ final class SearchViewModel: BaseViewModel {
         self.inputData = inputData
     }
     
-    func navigateToResult() {
-        router.navigate(to: .result)
+    func navigateToRecentSearches() {
+        router.navigate(to: .recentSearches, filterInputData: nil)
     }
     
-    func navigateToRecentSearches() {
-        router.navigate(to: .recentSearches)
+    func showFilter(inputData: FilterInputData) {
+        router.navigate(to: .filter, filterInputData: inputData)
     }
     
     func fetchProductTitles(completion: @escaping (Result<[ProductModel], Error>) -> ()) {
