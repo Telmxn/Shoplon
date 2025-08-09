@@ -31,14 +31,16 @@ final class LoginViewModel: BaseViewModel {
     func navigateToHomeDirect() {
         let context = LAContext()
         var error: NSError?
-        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            let reason = "Please authorize with touch id!"
-            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { [weak self] success, error in
-                DispatchQueue.main.async {
-                    guard success, error == nil else {
-                        return
+        if !DependencyContainer.shared.keychainManager.getString(key: .email).isEmpty {
+            if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+                let reason = "Please authorize with touch id!"
+                context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { [weak self] success, error in
+                    DispatchQueue.main.async {
+                        guard success, error == nil else {
+                            return
+                        }
+                        self?.router.navigate(to: .home)
                     }
-                    self?.router.navigate(to: .home)
                 }
             }
         }

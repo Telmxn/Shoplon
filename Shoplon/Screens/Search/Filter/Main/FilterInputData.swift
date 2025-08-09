@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum SortBy: String {
+enum SortBy: String, CaseIterable {
     case priceLowToHigh = "priceLowToHigh"
     case priceHightToLow = "priceHighToLow"
     case new = "new"
@@ -17,11 +17,11 @@ enum SortBy: String {
 }
 
 struct FilterInputData {
-    let isAvailableInStock: Bool
-    let colors: [String]
-    let size: [String]
-    let brand: [String]
-    let minPrice: Double
-    let maxPrice: Double
-    let sortBy: SortBy
+    var isAvailableInStock: Bool
+    var colors: [String]
+    var size: [String]
+    var brands: [String]
+    var minPrice: Double
+    var maxPrice: Double
+    var sortBy: SortBy
 }

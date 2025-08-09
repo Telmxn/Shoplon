@@ -9,6 +9,7 @@ import UIKit
 
 enum ProfileRoute {
     case orders
+    case login
 }
 
 final class ProfileRouter {
@@ -18,6 +19,9 @@ final class ProfileRouter {
         switch route {
         case .orders:
             print("Orders")
+        case .login:
+            let vc = LoginBuilder().build()
+            view?.navigationController?.setViewControllers([vc], animated: true)
         }
     }
 }

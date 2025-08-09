@@ -30,8 +30,8 @@ extension LAContext {
                 return .touchID
             case .faceID:
                 return .faceID
-            @unknown default:
-                #warning("Handle new Biometric type")
+            default:
+                return .none
             }
         }
         

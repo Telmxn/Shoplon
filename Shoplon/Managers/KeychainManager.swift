@@ -27,7 +27,7 @@ final class KeychainManager {
         return keychain.get(key.rawValue) ?? ""
     }
     
-    func remove(key: UserDefaultKeys) {
+    func remove(key: KeychainKeys) {
         keychain.delete(key.rawValue)
     }
 }

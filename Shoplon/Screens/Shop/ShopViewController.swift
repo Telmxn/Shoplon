@@ -23,7 +23,7 @@ final class ShopViewController: BaseViewController<ShopViewModel> {
         view.register(UICollectionReusableView.self,
                     forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                     withReuseIdentifier: "Header")
-        
+        view.contentInset = .init(top: 25, left: 0, bottom: 0, right: 0)
         view.delegate = self
         view.dataSource = self
         return view

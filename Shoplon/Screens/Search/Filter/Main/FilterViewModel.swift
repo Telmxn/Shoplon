@@ -8,9 +8,11 @@
 import Foundation
 
 final class FilterViewModel: BaseViewModel {
-    private let inputData: FilterInputData
+    private var inputData: FilterInputData
     
     private let router: FilterRouter
+    
+    @Published var filterData: FilterInputData? = nil
     
     @Published var productColors: [ProductModel.ColorModel: Int] = [:]
     
@@ -27,6 +29,10 @@ final class FilterViewModel: BaseViewModel {
     init(inputData: FilterInputData, router: FilterRouter) {
         self.inputData = inputData
         self.router = router
+    }
+    
+    func fetchFilterData() {
+        filterData = inputData
     }
     
     func fetchProducts() {
@@ -77,5 +83,14 @@ final class FilterViewModel: BaseViewModel {
                 }
             }
         }
+    }
+    
+    func chooseSort(by: SortBy) {
+        filterData?.sortBy = by
+    }
+    
+    func chooseAvailability(inStock: Bool) {
+        inputData.isAvailableInStock = inStock
+        fetchFilterData()
     }
 }

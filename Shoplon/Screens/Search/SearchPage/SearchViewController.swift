@@ -131,7 +131,7 @@ final class SearchViewController: BaseViewController<SearchViewModel>, Keyboarda
             switch result {
             case .success(let success):
                 var list: [SearchItemType] = success.map { product in
-                    return .title(.init(title: product.name.highlightText(with: ""), isDeleteButtonShown: false))
+                    return .title(.init(title: product.name.highlightText(with: ""), titleRaw: product.name, isDeleteButtonShown: false))
                 }
                 let productsList: [SearchItemType] = success.map { product in
                     return .product(.init(name: product.name, price: product.price, discount: product.discount, brand: product.brand, imageUrl: product.imageUrls.first ?? ""))
@@ -147,7 +147,7 @@ final class SearchViewController: BaseViewController<SearchViewModel>, Keyboarda
     
     private func setRecentSearches() {
         recentSearchesList = DependencyContainer.shared.userDefaultsManager.getStringArray(key: .recentSearches).map({ text in
-            return .title(.init(title: text.highlightText(with: ""), isDeleteButtonShown: true))
+            return .title(.init(title: text.highlightText(with: ""), titleRaw: text, isDeleteButtonShown: true))
         })
     }
     
@@ -253,7 +253,7 @@ final class SearchViewController: BaseViewController<SearchViewModel>, Keyboarda
                 switch itemType {
                 case .title(let item):
                     let highlightedTitle = item.title.string.highlightText(with: searchText)
-                    return .title(SearchItemCollectionViewCell.Item(title: highlightedTitle, isDeleteButtonShown: false))
+                    return .title(SearchItemCollectionViewCell.Item(title: highlightedTitle, titleRaw: item.titleRaw, isDeleteButtonShown: false))
                 case .product(let item):
                     return .product(item)
                 }
@@ -312,10 +312,10 @@ final class SearchViewController: BaseViewController<SearchViewModel>, Keyboarda
                 list.insert(text, at: 0)
             }
             recentSearchesList = list.map({ text in
-                return .title(.init(title: text.highlightText(with: ""), isDeleteButtonShown: true))
+                return .title(.init(title: text.highlightText(with: ""), titleRaw: text, isDeleteButtonShown: true))
             })
         } else {
-            recentSearchesList.insert(.title(.init(title: text.highlightText(with: ""), isDeleteButtonShown: true)), at: 0)
+            recentSearchesList.insert(.title(.init(title: text.highlightText(with: ""), titleRaw: text, isDeleteButtonShown: true)), at: 0)
             list.insert(text, at: 0)
         }
         
@@ -381,6 +381,6 @@ extension SearchViewController: UICollectionViewDelegate, SearchItemDelegate, Se
     }
     
     func didTapFilter() {
-        viewModel.showFilter(inputData: .init(isAvailableInStock: false, colors: [], size: [], brand: [], minPrice: 0, maxPrice: 300, sortBy: .az))
+        viewModel.showFilter(inputData: .init(isAvailableInStock: true, colors: [], size: [], brands: [], minPrice: 0, maxPrice: 300, sortBy: .az))
     }
 }

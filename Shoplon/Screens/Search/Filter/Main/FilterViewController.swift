@@ -11,22 +11,9 @@ final class FilterViewController: BaseViewController<FilterViewModel> {
     
     private var diffableDataSource: FilterDiffableDataSource? = nil
     
-    private var filterItemTypesList: [FilterItemType] = [
-        .title(.init(title: "color".localized().highlightText(with: "color".localized()), isFilterItem: true, haveCheckbox: false, showRightImage: true)),
-        .title(.init(title: "size".localized().highlightText(with: "size".localized()), isFilterItem: true, haveCheckbox: false, showRightImage: true)),
-        .title(.init(title: "brand".localized().highlightText(with: "brand".localized()), isFilterItem: true, haveCheckbox: false, showRightImage: true)),
-        .title(.init(title: "price".localized().highlightText(with: "price".localized()), isFilterItem: true, haveCheckbox: false, showRightImage: true)),
-        .title(.init(title: "availableInStock".localized().highlightText(with: "availableInStock".localized()), isFilterItem: true, haveCheckbox: true, showRightImage: false))
-    ]
+    private lazy var filterItemTypesList: [FilterItemType] = []
     
-    private var sortItemTypesList: [FilterItemType] = [
-        .title(.init(title: SortBy.priceLowToHigh.rawValue.localized().highlightText(with: SortBy.priceLowToHigh.rawValue.localized()), isFilterItem: false, haveCheckbox: true, showRightImage: false)),
-        .title(.init(title: SortBy.priceHightToLow.rawValue.localized().highlightText(with: SortBy.priceHightToLow.rawValue.localized()), isFilterItem: false, haveCheckbox: true, showRightImage: false)),
-        .title(.init(title: SortBy.new.rawValue.localized().highlightText(with: SortBy.new.rawValue.localized()), isFilterItem: false, haveCheckbox: true, showRightImage: false)),
-        .title(.init(title: SortBy.highestRated.rawValue.localized().highlightText(with: SortBy.highestRated.rawValue.localized()), isFilterItem: false, haveCheckbox: true, showRightImage: false)),
-        .title(.init(title: SortBy.az.rawValue.localized().highlightText(with: SortBy.az.rawValue.localized()), isFilterItem: false, haveCheckbox: true, showRightImage: false)),
-        .title(.init(title: SortBy.za.rawValue.localized().highlightText(with: SortBy.za.rawValue.localized()), isFilterItem: false, haveCheckbox: true, showRightImage: false))
-    ]
+    private var sortItemTypesList: [FilterItemType] = []
     
     private var colorsItemTypesList: [FilterItemType] = []
     
@@ -35,6 +22,8 @@ final class FilterViewController: BaseViewController<FilterViewModel> {
     private var brandsItemTypesList: [FilterItemType] = []
     
     private var pricesItemTypesList: [FilterItemType] = []
+    
+    private var filterData: FilterInputData? = nil
     
     private let topStackView: UIStackView = {
         let view = UIStackView()
@@ -93,6 +82,8 @@ final class FilterViewController: BaseViewController<FilterViewModel> {
         title = "filter".localized()
         
         makeDiffableDataSource()
+        viewModel.fetchFilterData()
+        
         applySnapshot(items: filterItemTypesList, section: .filter)
         
         viewModel.fetchProducts()
@@ -123,6 +114,27 @@ final class FilterViewController: BaseViewController<FilterViewModel> {
     override func bindViewModel() {
         super.bindViewModel()
         
+        viewModel.$filterData
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] filterData in
+                self?.filterData = filterData
+                self?.sortItemTypesList = SortBy.allCases.map { sortBy in
+                    return .title(.init(title: sortBy.rawValue.localized().highlightText(with: sortBy.rawValue.localized()), titleRaw: sortBy.rawValue, isFilterItem: false, haveCheckbox: true, showRightImage: false, isActive: filterData?.sortBy == sortBy))
+                }
+                self?.filterItemTypesList = [
+                    .title(.init(title: "color".localized().highlightText(with: "color".localized()), titleRaw: "color", isFilterItem: true, haveCheckbox: false, showRightImage: true, isActive: false)),
+                    .title(.init(title: "size".localized().highlightText(with: "size".localized()), titleRaw: "size", isFilterItem: true, haveCheckbox: false, showRightImage: true, isActive: false)),
+                    .title(.init(title: "brand".localized().highlightText(with: "brand".localized()), titleRaw: "brand", isFilterItem: true, haveCheckbox: false, showRightImage: true, isActive: false)),
+                    .title(.init(title: "price".localized().highlightText(with: "price".localized()), titleRaw: "price", isFilterItem: true, haveCheckbox: false, showRightImage: true, isActive: false)),
+                    .title(.init(title: "availableInStock".localized().highlightText(with: "availableInStock".localized()), titleRaw: "availableInStock", isFilterItem: true, haveCheckbox: true, showRightImage: false, isActive: filterData?.isAvailableInStock ?? true))
+                ]
+                if let filterItems = self?.filterItemTypesList {
+                    self?.applySnapshot(items: filterItems, section: .filter)
+                }
+                
+            }
+            .store(in: &cancellables)
+        
         viewModel.$products
             .receive(on: DispatchQueue.main)
             .sink { [weak self] products in
@@ -141,7 +153,7 @@ final class FilterViewController: BaseViewController<FilterViewModel> {
                 self.colorsItemTypesList = colors.map({ color in
                     let title = "\(color.key.name) (\(color.value))"
                     let productColor: UIColor? = .init(hex: color.key.hex)
-                    return .title(.init(title: title.highlightText(with: color.key.name), isFilterItem: true, color: productColor))
+                    return .title(.init(title: title.highlightText(with: color.key.name), titleRaw: title, isFilterItem: true, color: productColor, isActive: false))
                 })
             }
             .store(in: &cancellables)
@@ -151,7 +163,7 @@ final class FilterViewController: BaseViewController<FilterViewModel> {
             .sink { sizes in
                 self.sizesItemTypesList = sizes.map({ size in
                     let title = "\(size.key) (\(size.value))"
-                    return .title(.init(title: title.highlightText(with: size.key), isFilterItem: true, haveCheckbox: true, showRightImage: false))
+                    return .title(.init(title: title.highlightText(with: size.key), titleRaw: title, isFilterItem: true, haveCheckbox: true, showRightImage: false, isActive: false))
                 })
             }
             .store(in: &cancellables)
@@ -161,7 +173,7 @@ final class FilterViewController: BaseViewController<FilterViewModel> {
             .sink { brands in
                 self.brandsItemTypesList = brands.map({ brand in
                     let title = "\(brand.key) (\(brand.value))"
-                    return .title(.init(title: title.highlightText(with: brand.key), isFilterItem: true, haveCheckbox: true, showRightImage: false))
+                    return .title(.init(title: title.highlightText(with: brand.key), titleRaw: title, isFilterItem: true, haveCheckbox: true, showRightImage: false, isActive: false))
                 })
             }
             .store(in: &cancellables)
@@ -171,7 +183,7 @@ final class FilterViewController: BaseViewController<FilterViewModel> {
             .sink { prices in
                 self.pricesItemTypesList = prices.map({ price in
                     let title = "\(price.key) (\(price.value))"
-                    return .title(.init(title: title.highlightText(with: price.key), isFilterItem: true, haveCheckbox: true, showRightImage: false))
+                    return .title(.init(title: title.highlightText(with: price.key), titleRaw: title, isFilterItem: true, haveCheckbox: true, showRightImage: false, isActive: false))
                 })
             }
             .store(in: &cancellables)
@@ -193,6 +205,11 @@ final class FilterViewController: BaseViewController<FilterViewModel> {
         snapshot.appendSections([section])
         snapshot.appendItems(items, toSection: section)
         title = section.rawValue.localized()
+        if section == .filter || section == .sort {
+            navigationItem.leftBarButtonItem = nil
+        } else {
+            navigationItem.setLeftBarButton(.init(image: .back, style: .done, target: self, action: #selector(didTapBackButton)), animated: true)
+        }
         diffableDataSource?.apply(snapshot, animatingDifferences: true)
     }
     
@@ -227,6 +244,11 @@ final class FilterViewController: BaseViewController<FilterViewModel> {
             button.setTitleColor(.white, for: .normal)
         }
     }
+    
+    @objc
+    private func didTapBackButton() {
+        applySnapshot(items: filterItemTypesList, section: .filter)
+    }
 }
 
 typealias FilterDiffableDataSource = UICollectionViewDiffableDataSource<FilterSection, FilterItemType>
@@ -249,7 +271,7 @@ extension FilterViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let sectionType = diffableDataSource?.snapshot().sectionIdentifiers[indexPath.section]
         if let sectionType = sectionType, sectionType == .filter {
-            if let item = diffableDataSource?.snapshot().itemIdentifiers(inSection: sectionType)[indexPath.row] {
+            if let item = diffableDataSource?.snapshot().itemIdentifiers[indexPath.row] {
                 switch item {
                 case .title(let item):
                     if item.title.string == "color".localized() {
@@ -260,7 +282,133 @@ extension FilterViewController: UICollectionViewDelegate {
                         applySnapshot(items: brandsItemTypesList, section: .brand)
                     } else if item.title.string == "price".localized() {
                         applySnapshot(items: pricesItemTypesList, section: .price)
+                    } else {
+                        filterData?.isAvailableInStock.toggle()
+                        filterItemTypesList = [
+                            .title(.init(title: "color".localized().highlightText(with: "color".localized()), titleRaw: "color", isFilterItem: true, haveCheckbox: false, showRightImage: true, isActive: false)),
+                            .title(.init(title: "size".localized().highlightText(with: "size".localized()), titleRaw: "size", isFilterItem: true, haveCheckbox: false, showRightImage: true, isActive: false)),
+                            .title(.init(title: "brand".localized().highlightText(with: "brand".localized()), titleRaw: "brand", isFilterItem: true, haveCheckbox: false, showRightImage: true, isActive: false)),
+                            .title(.init(title: "price".localized().highlightText(with: "price".localized()), titleRaw: "price", isFilterItem: true, haveCheckbox: false, showRightImage: true, isActive: false)),
+                            .title(.init(title: "availableInStock".localized().highlightText(with: "availableInStock".localized()), titleRaw: "availableInStock", isFilterItem: true, haveCheckbox: true, showRightImage: false, isActive: filterData?.isAvailableInStock ?? false))
+                        ]
+                        applySnapshot(items: filterItemTypesList, section: .filter)
                     }
+                }
+            }
+        } else if sectionType == .sort {
+            if let item = diffableDataSource?.snapshot().itemIdentifiers[indexPath.row] {
+                switch item {
+                case .title(let item):
+                    filterData?.sortBy = .init(rawValue: item.titleRaw) ?? .za
+                    sortItemTypesList = SortBy.allCases.map { sortBy in
+                        return .title(.init(title: sortBy.rawValue.localized().highlightText(with: sortBy.rawValue.localized()), titleRaw: sortBy.rawValue, isFilterItem: false, haveCheckbox: true, showRightImage: false, isActive: filterData?.sortBy == sortBy))
+                    }
+                    applySnapshot(items: sortItemTypesList, section: .sort)
+                }
+                
+            }
+        } else if sectionType == .brand {
+            if let item = diffableDataSource?.snapshot().itemIdentifiers[indexPath.row] {
+                switch item {
+                case .title(let item):
+                    if filterData?.brands.contains(item.title.string) ?? false {
+                        let index = filterData?.brands.firstIndex(of: item.title.string)
+                        if let index = index {
+                            filterData?.brands.remove(at: index)
+                        }
+                    } else {
+                        filterData?.brands.append(item.title.string)
+                    }
+                    let oldbrand = brandsItemTypesList
+                    brandsItemTypesList = oldbrand.map({ brand in
+                        switch brand {
+                        case .title(let itemInside):
+                            if filterData?.brands.contains(itemInside.title.string) ?? false {
+                                return .title(.init(title: itemInside.title, titleRaw: itemInside.titleRaw, isFilterItem: true, haveCheckbox: true, showRightImage: false, isActive: true))
+                            } else {
+                                return .title(.init(title: itemInside.title, titleRaw: itemInside.titleRaw, isFilterItem: true, haveCheckbox: true, showRightImage: false, isActive: false))
+                            }
+                        }
+                    })
+                    applySnapshot(items: brandsItemTypesList, section: .brand)
+                }
+            }
+        } else if sectionType == .color {
+            if let item = diffableDataSource?.snapshot().itemIdentifiers[indexPath.row] {
+                switch item {
+                case .title(let item):
+                    if filterData?.colors.contains(item.title.string) ?? false {
+                        let index = filterData?.colors.firstIndex(of: item.title.string)
+                        if let index = index {
+                            filterData?.colors.remove(at: index)
+                        }
+                    } else {
+                        filterData?.colors.append(item.title.string)
+                    }
+                    let oldcolors = colorsItemTypesList
+                    colorsItemTypesList = oldcolors.map({ color in
+                        switch color {
+                        case .title(let itemInside):
+                            let title = itemInside.title.string
+                            if filterData?.colors.contains(title) ?? false {
+                                return .title(.init(title: itemInside.title, titleRaw: title, isFilterItem: true, color: itemInside.color, isActive: true))
+                            } else {
+                                return .title(.init(title: itemInside.title, titleRaw: title, isFilterItem: true, color: itemInside.color, isActive: false))
+                            }
+                        }
+                    })
+                    applySnapshot(items: colorsItemTypesList, section: .color)
+                }
+            }
+        } else if sectionType == .size {
+            if let item = diffableDataSource?.snapshot().itemIdentifiers[indexPath.row] {
+                switch item {
+                case .title(let item):
+                    if filterData?.size.contains(item.title.string) ?? false {
+                        let index = filterData?.size.firstIndex(of: item.title.string)
+                        if let index = index {
+                            filterData?.size.remove(at: index)
+                        }
+                    } else {
+                        filterData?.size.append(item.title.string)
+                    }
+                    let oldsizes = sizesItemTypesList
+                    sizesItemTypesList = oldsizes.map({ size in
+                        switch size {
+                        case .title(let itemInside):
+                            if filterData?.size.contains(itemInside.title.string) ?? false {
+                                return .title(.init(title: itemInside.title, titleRaw: itemInside.titleRaw, isFilterItem: true, haveCheckbox: true, showRightImage: false, isActive: true))
+                            } else {
+                                return .title(.init(title: itemInside.title, titleRaw: itemInside.titleRaw, isFilterItem: true, haveCheckbox: true, showRightImage: false, isActive: false))
+                            }
+                        }
+                    })
+                    applySnapshot(items: sizesItemTypesList, section: .size)
+                }
+            }
+        } else if sectionType == .price {
+            if let item = diffableDataSource?.snapshot().itemIdentifiers[indexPath.row] {
+                switch item {
+                case .title(let item):
+                    let minMaxPrices = item.titleRaw.split(separator: " ")[0].split(separator: "-")
+                    let minPrice = minMaxPrices[0]
+                    let maxPrice = minMaxPrices[1]
+                    
+                    filterData?.minPrice = Double(minPrice) ?? 0
+                    filterData?.maxPrice = Double(maxPrice) ?? 25
+                    
+                    let oldPrices = pricesItemTypesList
+                    pricesItemTypesList = oldPrices.map({ price in
+                        switch price {
+                        case .title(let itemInside):
+                            if filterData?.minPrice.isEqual(to: Double(itemInside.titleRaw.split(separator: " ")[0].split(separator: "-")[0]) ?? 0) ?? false {
+                                return .title(.init(title: itemInside.title, titleRaw: itemInside.titleRaw, isFilterItem: true, haveCheckbox: true, showRightImage: false, isActive: true))
+                            } else {
+                                return .title(.init(title: itemInside.title, titleRaw: itemInside.titleRaw, isFilterItem: true, haveCheckbox: true, showRightImage: false, isActive: false))
+                            }
+                        }
+                    })
+                    applySnapshot(items: pricesItemTypesList, section: .price)
                 }
             }
         }

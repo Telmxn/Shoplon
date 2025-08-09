@@ -156,41 +156,49 @@ final class SearchItemCollectionViewCell: BaseCollectionViewCell {
 extension SearchItemCollectionViewCell {
     struct Item: Hashable {
         let title: NSAttributedString
+        let titleRaw: String
         let isDeleteButtonShown: Bool
         let isFilterItem: Bool
         let isSortItem: Bool
         let haveCheckbox: Bool
         let color: UIColor?
         let showRightImage: Bool
+        var isActive: Bool
         
-        init(title: NSAttributedString, isDeleteButtonShown: Bool) {
+        init(title: NSAttributedString, titleRaw: String, isDeleteButtonShown: Bool) {
             self.title = title
+            self.titleRaw = titleRaw
             self.isDeleteButtonShown = isDeleteButtonShown
             self.isFilterItem = false
             self.isSortItem = false
             self.haveCheckbox = false
             self.color = nil
             self.showRightImage = isDeleteButtonShown
+            self.isActive = false
         }
         
-        init(title: NSAttributedString, isFilterItem: Bool, haveCheckbox: Bool, showRightImage: Bool) {
+        init(title: NSAttributedString, titleRaw: String, isFilterItem: Bool, haveCheckbox: Bool, showRightImage: Bool, isActive: Bool) {
             self.title = title
+            self.titleRaw = titleRaw
             self.isDeleteButtonShown = false
             self.isFilterItem = isFilterItem
             self.isSortItem = !isFilterItem
             self.haveCheckbox = haveCheckbox
             self.color = nil
             self.showRightImage = showRightImage
+            self.isActive = isActive
         }
         
-        init(title: NSAttributedString, isFilterItem: Bool, color: UIColor?) {
+        init(title: NSAttributedString, titleRaw: String, isFilterItem: Bool, color: UIColor?, isActive: Bool) {
             self.title = title
+            self.titleRaw = titleRaw
             self.isDeleteButtonShown = false
             self.isFilterItem = isFilterItem
             self.isSortItem = !isFilterItem
             self.haveCheckbox = true
             self.color = color
             self.showRightImage = false
+            self.isActive = isActive
         }
     }
     
@@ -228,5 +236,15 @@ extension SearchItemCollectionViewCell {
         } else {
             rightView.isHidden = true
         }
+        
+        checkBoxImageView.layer.opacity = item.isActive ? 1 : 0
+        
+        layoutIfNeeded()
+    }
+    
+    func setActivity(isActive: Bool) {
+        checkBoxImageView.layer.opacity = isActive ? 1 : 0
+        
+        layoutIfNeeded()
     }
 }
